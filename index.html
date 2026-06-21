@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNA Giao Dịch — Khám Phá Tính Cách Trader</title>
+  <meta name="description" content="Bài test tâm lý trading chuyên sâu: MBTI × Phong cách Trader × Gambler Index. Miễn phí, cá nhân hóa, dành riêng cho trader Việt Nam.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Bấm copy toàn bộ nội dung trong thẻ <style> từ file gốc của bạn vào đây */
+    :root { --navy: #080D1A; --navy2: #0D1526; --card: #131E35; --card2: #19274A; --border: #1F2E4A; --border2: #2A3E62; --gold: #C9A84C; --gold2: #E8C97A; --gold-bg: rgba(201,168,76,0.08); --text: #E8EDF5; --sub: #6B7A99; --sub2: #8A9BB8; --green: #27AE60; --green2: #2ECC71; --red: #C0392B; --red2: #E74C3C; --yellow: #E67E22; --blue: #2980B9; --purple: #8E44AD; --radius: 12px; --radius2: 8px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.18; pointer-events: none; z-index: 0; }
+    #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+    .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(8,13,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.5px; }
+    .logo em { color: var(--gold); font-style: normal; }
+    .screen { display: none; flex: 1; }
+    .screen.active { display: block; }
+    #screen-landing { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 60px 24px 80px; }
+    .landing-hero { text-align: center; max-width: 560px; margin-bottom: 48px; }
+    .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 6vw, 48px); font-weight: 700; line-height: 1.15; margin-bottom: 18px; }
+    .hero-title em { color: var(--gold); font-style: normal; }
+    .hero-sub { font-size: 15px; color: var(--sub2); line-height: 1.7; margin-bottom: 32px; }
+    .layer-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+    .pill { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid; font-family: 'Space Grotesk', sans-serif; font-weight: 500; }
+    .pill-blue  { color: #5882FF; border-color: rgba(88,130,255,.35); background: rgba(88,130,255,.08); }
+    .pill-green { color: var(--green2); border-color: rgba(46,204,113,.35); background: rgba(46,204,113,.08); }
+    .pill-red   { color: var(--red2); border-color: rgba(231,76,60,.35); background: rgba(231,76,60,.08); }
+    .reg-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; max-width: 480px; width: 100%; position: relative; overflow: hidden; }
+    .reg-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(201,168,76,.12), transparent 70%); pointer-events: none; }
+    .reg-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 20px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg.full { grid-column: 1 / -1; }
+    .fg label { font-size: 11px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.8px; color: var(--sub); text-transform: uppercase; }
+    .fg input, .fg select { background: var(--navy2); border: 1px solid var(--border2); border-radius: var(--radius2); padding: 11px 14px; color: var(--text); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s; width: 100%; }
+    .fg input:focus, .fg select:focus { border-color: var(--gold); }
+    .hp { position: absolute; opacity: 0; top: -9999px; left: -9999px; }
+    .btn-begin { width: 100%; margin-top: 22px; background: var(--gold); border: none; border-radius: var(--radius2); padding: 14px; color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; letter-spacing: 0.5px; transition: background .2s, transform .15s; }
+    .btn-begin:hover { background: var(--gold2); transform: translateY(-1px); }
+    .reg-note { margin-top: 14px; font-size: 11px; color: var(--sub); text-align: center; line-height: 1.6; }
+    .field-err { font-size: 11px; color: var(--red2); margin-top: 3px; display: none; }
+    @media (max-width: 520px) { .reg-card { padding:24px 20px; } .form-grid { grid-template-columns:1fr; } .fg.full { grid-column:1; } }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header class="header">
+    <div class="logo">DNA <em>Giao Dịch</em></div>
+  </header>
+
+  <div class="screen active" id="screen-landing">
+    <div class="landing-hero">
+      <div class="hero-eyebrow">Module 0 — Tâm Lý Trading</div>
+      <h1 class="hero-title">Khám phá <em>DNA</em><br>giao dịch của bạn</h1>
+      <p class="hero-sub">Bài test tâm lý trading chuyên sâu đầu tiên dành riêng cho trader Việt Nam. Ba lớp phân tích, một kết luận cá nhân hóa.</p>
+      <div class="layer-pills">
+        <span class="pill pill-blue">48 câu MBTI Tính Cách</span>
+        <span class="pill pill-green">20 câu MBTI Trader</span>
+        <span class="pill pill-red">10 câu Gambler Index</span>
+      </div>
+    </div>
+
+    <div class="reg-card">
+      <div class="reg-title">Thông tin của bạn</div>
+      <div class="form-grid">
+        <div class="fg">
+          <label for="f-name">Họ và tên <span style="color:var(--red2)">*</span></label>
+          <input type="text" id="f-name" placeholder="Nguyễn Văn A" autocomplete="name">
+          <span class="field-err" id="err-name">Vui lòng nhập họ tên.</span>
+        </div>
+        <div class="fg">
+          <label for="f-age">Tuổi <span style="color:var(--red2)">*</span></label>
+          <input type="number" id="f-age" placeholder="25" min="15" max="70" autocomplete="off">
+          <span class="field-err" id="err-age">Nhập tuổi hợp lệ (15–70).</span>
+        </div>
+        <div class="fg full">
+          <label for="f-email">Email <span style="color:var(--red2)">*</span></label>
+          <input type="email" id="f-email" placeholder="email@example.com" autocomplete="email">
+          <span class="field-err" id="err-email">Email không hợp lệ.</span>
+        </div>
+        <div class="fg full">
+          <label for="f-job">Nghề nghiệp hiện tại <span style="color:var(--red2)">*</span></label>
+          <select id="f-job">
+            <option value="">-- Chọn nghề nghiệp --</option>
+            <option value="trader-full">Trader (full-time)</option>
+            <option value="trader-part">Trader (part-time / tay ngang)</option>
+            <option value="finance">Tài chính / Ngân hàng / Đầu tư</option>
+            <option value="tech">IT / Kỹ thuật / Lập trình</option>
+            <option value="business">Kinh doanh / Doanh nhân</option>
+            <option value="student">Sinh viên</option>
+            <option value="other">Khác</option>
+          </select>
+          <span class="field-err" id="err-job">Vui lòng chọn nghề nghiệp.</span>
+        </div>
+      </div>
+      <input type="text" class="hp" id="hp-field" tabindex="-1" autocomplete="off">
+      <input type="hidden" id="form-ts" value="">
+      <button class="btn-begin" onclick="beginQuiz()">Bắt đầu kiểm tra →</button>
+      <p class="reg-note">🔒 Thông tin của bạn được bảo mật. Chỉ dùng để cá nhân hóa kết quả.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('form-ts').value = Date.now();
+
+  function beginQuiz(){
+    if(document.getElementById('hp-field').value !== '') return;
+    const elapsed = Date.now() - parseInt(document.getElementById('form-ts').value);
+    if(elapsed < 3000) return;
+
+    const name = document.getElementById('f-name').value.trim();
+    const age = parseInt(document.getElementById('f-age').value);
+    const email = document.getElementById('f-email').value.trim();
+    const job = document.getElementById('f-job').value;
+    const jobText = document.getElementById('f-job').options[document.getElementById('f-job').selectedIndex]?.text;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let isValid = true;
+    
+    if(!name) { document.getElementById('err-name').style.display = 'block'; isValid = false; } else { document.getElementById('err-name').style.display = 'none'; }
+    if(!age || age<15 || age>70) { document.getElementById('err-age').style.display = 'block'; isValid = false; } else { document.getElementById('err-age').style.display = 'none'; }
+    if(!emailRe.test(email)) { document.getElementById('err-email').style.display = 'block'; isValid = false; } else { document.getElementById('err-email').style.display = 'none'; }
+    if(!job) { document.getElementById('err-job').style.display = 'block'; isValid = false; } else { document.getElementById('err-job').style.display = 'none'; }
+
+    if(!isValid) return;
+
+    // Lưu dữ liệu vào SessionStorage
+    const userData = { name, age, email, job: jobText };
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+    
+    // Chuyển trang
+    window.location.href = 'test.html';
+  }
+</script>
+</body>
+</html>

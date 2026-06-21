@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kết Quả — DNA Giao Dịch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Bấm copy toàn bộ nội dung trong thẻ <style> từ file gốc của bạn vào đây */
+    :root { --navy: #080D1A; --navy2: #0D1526; --card: #131E35; --card2: #19274A; --border: #1F2E4A; --border2: #2A3E62; --gold: #C9A84C; --gold2: #E8C97A; --gold-bg: rgba(201,168,76,0.08); --text: #E8EDF5; --sub: #6B7A99; --sub2: #8A9BB8; --green: #27AE60; --green2: #2ECC71; --red: #C0392B; --red2: #E74C3C; --yellow: #E67E22; --blue: #2980B9; --purple: #8E44AD; --radius: 12px; --radius2: 8px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.18; pointer-events: none; z-index: 0; }
+    #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+    .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(8,13,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.5px; }
+    .logo em { color: var(--gold); font-style: normal; }
+    
+    #screen-result { padding: 32px 20px 80px; display: flex; flex-direction: column; align-items: center; }
+    .result-wrap { max-width: 640px; width: 100%; }
+    .r-hero { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 16px; text-align: center; position: relative; overflow: hidden; }
+    .r-hero::before { content:''; position: absolute; inset: 0; background: radial-gradient(ellipse at top, rgba(201,168,76,.1), transparent 60%); pointer-events: none; }
+    .r-greeting { font-size:13px; color:var(--sub2); margin-bottom:6px; }
+    .r-type { font-family: 'Space Grotesk', sans-serif; font-size: 58px; font-weight: 700; letter-spacing: 5px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+    .r-typename { font-size:17px; color:var(--sub2); margin-bottom:16px; }
+    .synthesis-box { background: var(--card2); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 16px; }
+    .syn-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .syn-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; font-size: 13px; line-height: 1.6; color: var(--sub2); }
+    .syn-row strong { color: var(--text); font-weight: 600; }
+    .syn-dot { color: var(--gold); margin-top: 4px; flex-shrink: 0; }
+    .verdict { margin-top: 14px; padding: 12px 16px; background: var(--navy2); border-radius: var(--radius2); font-size: 14px; color: var(--text); line-height: 1.7; }
+    .verdict strong { color: var(--gold); }
+    .sec-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); margin: 22px 0 10px; }
+    .dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+    .dim-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+    .dim-lbl { font-size:11px; color:var(--sub); margin-bottom:4px; }
+    .dim-win { font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600; color:var(--text); margin-bottom:8px; }
+    .dim-track { height:4px; background:var(--border2); border-radius:2px; overflow:hidden; margin-bottom:6px; }
+    .dim-fill  { height:100%; border-radius:2px; transition:width .9s ease; }
+    .dim-pcts  { display:flex; justify-content:space-between; font-size:11px; color:var(--sub); }
+    .dim-pcts .hi { color:var(--gold); font-weight:600; }
+    .a-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 10px; }
+    .a-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .a-card p, .a-card li { font-size: 13px; color: var(--sub2); line-height: 1.75; }
+    .a-card ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
+    .a-card li { padding-left:16px; position:relative; }
+    .a-card li::before { content:'▸'; position:absolute; left:0; color:var(--gold); font-size:10px; top:4px; }
+    .tag { font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 20px; font-family: 'Space Grotesk', sans-serif; letter-spacing: .5px; }
+    .tag-green  { background:rgba(39,174,96,.15);  color:var(--green2); }
+    .tag-yellow { background:rgba(230,126,34,.15);  color:var(--yellow); }
+    .tag-red    { background:rgba(231,76,60,.15);   color:var(--red2); }
+    .g-score-row { display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+    .g-num  { font-family:'Space Grotesk',sans-serif; font-size:44px; font-weight:700; }
+    .g-max  { font-size:14px; color:var(--sub); }
+    .g-bar  { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
+    .g-fill { height:100%; border-radius:3px; transition:width .9s ease; }
+    .restart-wrap { text-align:center; margin-top:28px; }
+    .btn-restart { background: transparent; border: 1px solid var(--border2); border-radius: var(--radius2); padding: 11px 28px; color: var(--sub); font-family: 'Space Grotesk', sans-serif; font-size: 13px; cursor: pointer; transition: all .2s; }
+    .btn-restart:hover { border-color:var(--gold); color:var(--gold); }
+    @media (max-width: 520px) { .dim-grid { grid-template-columns:1fr; } .r-type { font-size:44px; } }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header class="header">
+    <div class="logo">DNA <em>Giao Dịch</em></div>
+  </header>
+
+  <div id="screen-result">
+    <div class="result-wrap" id="resultWrap"></div>
+  </div>
+</div>
+
+<script>
+// Kiểm tra session
+const resultData = JSON.parse(sessionStorage.getItem('resultData'));
+if (!resultData) {
+  window.location.href = 'index.html';
+}
+
+const MBTI_TRADER_INFO = {
+  INTJ:{name:'Kiến Trúc Sư',style:'Systematic Algo Trader',strength:'Tư duy hệ thống, chiến lược dài hạn, kỷ luật cao.',blind:'Ego gắn với phân tích — khó chấp nhận "đúng một nửa".',verdict:'Phù hợp Algo Trading. Cần EA hoặc rule book cứng.'},
+  INTP:{name:'Nhà Tư Duy',style:'Quant Researcher',strength:'Phân tích sâu, backtest tốt.',blind:'Phân tích mãi không action.',verdict:'Cần deadline cứng để ép live.'},
+  ENTJ:{name:'Tướng Lĩnh',style:'Fund Manager',strength:'Quyết đoán, quản lý vốn tốt.',blind:'Tự tự tin thái quá, sizing quá lớn.',verdict:'Cần hard cap risk %.'},
+  ENTP:{name:'Nhà Tranh Luận',style:'Momentum Trader',strength:'Thích nghi nhanh, sáng tạo.',blind:'Thiếu kỷ luật, dễ FOMO.',verdict:'Cần trading journal bắt buộc.'},
+  INFJ:{name:'Người Bảo Hộ',style:'Macro Intuition Trader',strength:'Trực giác tốt, nhìn big picture.',blind:'Cảm xúc chi phối khi sai.',verdict:'Cần pre-defined entry trigger.'},
+  INFP:{name:'Người Hòa Giải',style:'Swing Trader',strength:'Kiên nhẫn, đọc câu chuyện thị trường tốt.',blind:'Không cut loss đúng lúc.',verdict:'Cần automated SL.'},
+  ENFJ:{name:'Người Dẫn Dắt',style:'Signal Trader',strength:'Đọc sentiment tốt.',blind:'Bị đám đông dẫn dắt.',verdict:'Cần xây system độc lập.'},
+  ENFP:{name:'Người Truyền Cảm Hứng',style:'News Trader',strength:'Phản xạ nhanh, sáng tạo.',blind:'Overtrade, thiếu nhất quán.',verdict:'Cần daily loss limit cứng.'},
+  ISTJ:{name:'Người Hậu Cần',style:'Rule-Based Trader',strength:'Kỷ luật tuyệt đối.',blind:'Quá cứng nhắc.',verdict:'DNA lý tưởng cho trader dài hạn.'},
+  ISFJ:{name:'Người Bảo Vệ',style:'Conservative Trader',strength:'Kiên nhẫn, bảo toàn vốn.',blind:'Loss aversion nặng.',verdict:'Phù hợp long-term investing hơn.'},
+  ESTJ:{name:'Giám Đốc Điều Hành',style:'Institutional Trader',strength:'Quản lý quy trình tốt.',blind:'Khó thừa nhận sai.',verdict:'Cần defined protocol khi sai.'},
+  ESFJ:{name:'Người Lãnh Sự',style:'Social Trader',strength:'Nhạy sentiment cộng đồng.',blind:'Không có hệ thống riêng.',verdict:'Tránh group “follow lệnh”.'},
+  ISTP:{name:'Người Thợ',style:'Technical Scalper',strength:'Bình tĩnh, execution tốt.',blind:'Thiếu big picture.',verdict:'Thêm timeframe cao vào routine.'},
+  ISFP:{name:'Nghệ Sĩ',style:'Discretionary Trader',strength:'Cảm nhận thị trường tốt.',blind:'Impulsive.',verdict:'Cần checklist trước khi vào lệnh.'},
+  ESTP:{name:'Người Thúc Đẩy',style:'Scalper',strength:'Quyết đoán, chịu áp lực.',blind:'Overtrade, gamble.',verdict:'Cần hard daily loss limit.'},
+  ESFP:{name:'Người Biểu Diễn',style:'Emotion-Driven Trader',strength:'Phản xạ nhanh.',blind:'Panic, không hệ thống.',verdict:'Cần EA hoặc copy trading.'},
+};
+
+const MBTI_GENERAL_INFO = {
+  INTJ:'Kiến Trúc Sư — Người có tầm nhìn chiến lược, độc lập và quyết đoán.',
+  INTP:'Nhà Tư Duy — Sáng tạo, logic, thích phân tích sâu.',
+  ENTJ:'Tướng Lĩnh — Quyết đoán, lãnh đạo bẩm sinh, thích tổ chức.',
+  ENTP:'Nhà Tranh Luận — Thông minh, nhanh nhạy, thích thử thách.',
+  INFJ:'Người Bảo Hộ — Trực giác tốt, kiên nhẫn, giàu lòng trắc ẩn.',
+  INFP:'Người Hòa Giải — Nhạy cảm, sáng tạo, trung thành.',
+  ENFJ:'Người Dẫn Dắt — Lôi cuốn, quan tâm đến người khác.',
+  ENFP:'Người Truyền Cảm Hứng — Nhiệt tình, sáng tạo, linh hoạt.',
+  ISTJ:'Người Hậu Cần — Kỷ luật, đáng tin cậy, thực tế.',
+  ISFJ:'Người Bảo Vệ — Chu đáo, tận tâm, bảo vệ truyền thống.',
+  ESTJ:'Giám Đốc Điều Hành — Cấu trúc, trách nhiệm, đáng tin cậy.',
+  ESFJ:'Người Lãnh Sự — Thân thiện, hỗ trợ, gắn kết.',
+  ISTP:'Người Thợ — Thực tế, bình tĩnh, giỏi xử lý khủng hoảng.',
+  ISFP:'Nghệ Sĩ — Nhạy cảm, linh hoạt, yêu thẩm mỹ.',
+  ESTP:'Người Thúc Đẩy — Hành động, chấp nhận rủi ro, thực tế.',
+  ESFP:'Người Biểu Diễn — Sống động, thích giao tiếp, thực tế.',
+};
+
+const GAMBLER_LEVELS = [
+  {max:5,  label:'Trader Có Hệ Thống', tag:'tag-green',  color:'#27AE60', desc:'DNA lành mạnh. Bạn trade bằng hệ thống, không bằng cảm xúc.'},
+  {max:10, label:'Vùng Xám — Rủi Ro Tiềm Ẩn', tag:'tag-yellow', color:'#E67E22', desc:'Có tố chất nhưng một số hành vi cần chỉnh.'},
+  {max:15, label:'Gambler Đang Ẩn Náu', tag:'tag-red',   color:'#E74C3C', desc:'Cần dừng live, review toàn bộ mindset.'},
+  {max:20, label:'Cờ Bạc Trá Hình',    tag:'tag-red',   color:'#C0392B', desc:'Trading đang là sòng bạc với bạn.'},
+];
+
+function getDims(){
+  return [
+    {lbl:'Năng Lượng', c1:'E',c2:'I', n1:'Hướng Ngoại (E)',n2:'Hướng Nội (I)', col:'#5882FF'},
+    {lbl:'Nhận Thức',  c1:'S',c2:'N', n1:'Nhận Biết (S)',  n2:'Trực Giác (N)', col:'#27AE60'},
+    {lbl:'Quyết Định', c1:'T',c2:'F', n1:'Lý Trí (T)',     n2:'Cảm Xúc (F)',   col:'#C9A84C'},
+    {lbl:'Lối Sống',   c1:'J',c2:'P', n1:'Kế Hoạch (J)',   n2:'Linh Hoạt (P)', col:'#8E44AD'},
+  ];
+}
+
+function buildDimGrid(dims, scores){
+  return dims.map(d=>{
+    const v1=scores[d.c1]||0, v2=scores[d.c2]||0, tot=v1+v2||1;
+    const pct=Math.round(v1/tot*100);
+    return `<div class="dim-card">
+      <div class="dim-lbl">${d.lbl}</div>
+      <div class="dim-win">${v1>=v2?d.n1:d.n2}</div>
+      <div class="dim-track"><div class="dim-fill" style="width:${pct}%;background:${d.col}"></div></div>
+      <div class="dim-pcts"><span class="hi">${pct}%</span><span>${100-pct}%</span></div>
+    </div>`;
+  }).join('');
+}
+
+// Hàm render cho Non-Trader
+function renderSimpleResult(){
+  const { userData, mg, scores } = resultData;
+  const info = MBTI_GENERAL_INFO[mg] || 'Tính cách độc đáo.';
+  const dims = getDims();
+
+  document.getElementById('resultWrap').innerHTML = `
+    <div class="r-hero">
+      <div class="r-greeting">Kết quả của ${userData.name}</div>
+      <div class="r-type">${mg}</div>
+      <div class="r-typename">${info}</div>
+    </div>
+    <div class="sec-title">Phân tích 4 chiều MBTI</div>
+    <div class="dim-grid">${buildDimGrid(dims, scores)}</div>
+    <div class="a-card">
+      <h3>📋 Thông tin cá nhân</h3>
+      <ul>
+        <li>Họ tên: ${userData.name} · Tuổi: ${userData.age}</li>
+        <li>Nghề nghiệp: ${userData.job}</li>
+        <li>Email: ${userData.email}</li>
+      </ul>
+    </div>
+    <div class="restart-wrap"><button class="btn-restart" onclick="goHome()">↺ Quay về trang chủ</button></div>
+  `;
+}
+
+// Hàm render cho Trader
+function renderFullResult(){
+  const { userData, mg, mt, mc, scores, gamblerScore } = resultData;
+  const traderInfo = MBTI_TRADER_INFO[mc] || MBTI_TRADER_INFO['INTJ'];
+  const gLvl = GAMBLER_LEVELS.find(l=>gamblerScore<=l.max) || GAMBLER_LEVELS[3];
+
+  let synText = '';
+  if(mg === mt){
+    synText = `Cả hai bộ câu hỏi cho kết quả nhất quán <strong>${mc}</strong>. Đây là type đáng tin cậy nhất.`;
+  } else {
+    synText = `MBTI chung cho <strong>${mg}</strong>, MBTI trader cho <strong>${mt}</strong>. Tổng hợp 68 câu cho ra <strong>${mc}</strong> — type chính xác nhất trong bối cảnh trading.`;
+  }
+
+  const dims = getDims();
+  const gColor = gamblerScore<=5 ? '#27AE60' : gamblerScore<=10 ? '#E67E22' : '#E74C3C';
+
+  document.getElementById('resultWrap').innerHTML = `
+    <div class="r-hero">
+      <div class="r-greeting">Kết quả của ${userData.name}</div>
+      <div class="r-type">${mc}</div>
+      <div class="r-typename">${traderInfo.name}</div>
+      <div style="margin-top:12px;color:var(--gold);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;">📈 ${traderInfo.style}</div>
+    </div>
+
+    <div class="synthesis-box">
+      <div class="syn-title">⚡ Tổng hợp & kết luận</div>
+      <div class="syn-row"><span class="syn-dot">▸</span><div>MBTI Tính Cách: <strong>${mg}</strong></div></div>
+      <div class="syn-row"><span class="syn-dot">▸</span><div>MBTI Trader: <strong>${mt}</strong></div></div>
+      <div class="syn-row"><span class="syn-dot">▸</span><div>Tổng hợp: <strong>${mc}</strong></div></div>
+      <div class="verdict">${synText}<br><br>${traderInfo.verdict}</div>
+    </div>
+
+    <div class="sec-title">Phân tích 4 chiều MBTI</div>
+    <div class="dim-grid">${buildDimGrid(dims, scores)}</div>
+
+    <div class="sec-title">Phân tích phong cách trader</div>
+    <div class="a-card"><h3>💪 Điểm mạnh</h3><p>${traderInfo.strength}</p></div>
+    <div class="a-card"><h3>⚠️ Điểm mù</h3><p>${traderInfo.blind}</p></div>
+
+    <div class="sec-title">Gambler Index</div>
+    <div class="a-card">
+      <h3>🎯 Chỉ số rủi ro tâm lý <span class="tag ${gLvl.tag}">${gLvl.label}</span></h3>
+      <div class="g-score-row">
+        <div><span class="g-num" style="color:${gColor}">${gamblerScore}</span><span class="g-max"> / 20</span></div>
+        <div class="g-bar"><div class="g-fill" style="width:${gamblerScore/20*100}%;background:${gColor}"></div></div>
+      </div>
+      <p>${gLvl.desc}</p>
+    </div>
+
+    <div class="a-card">
+      <h3>📋 Thông tin cá nhân</h3>
+      <ul>
+        <li>Họ tên: ${userData.name} · Tuổi: ${userData.age}</li>
+        <li>Nghề nghiệp: ${userData.job}</li>
+        <li>Email: ${userData.email}</li>
+        <li>Lưu ý: Kết quả phản ánh bạn ở thời điểm hiện tại. Nên test lại sau 3–6 tháng.</li>
+      </ul>
+    </div>
+
+    <div class="restart-wrap"><button class="btn-restart" onclick="goHome()">↺ Quay về trang chủ</button></div>
+  `;
+}
+
+function goHome(){
+  sessionStorage.clear();
+  window.location.href = 'index.html';
+}
+
+// Khởi chạy
+if (resultData.isTrader) {
+  renderFullResult();
+} else {
+  renderSimpleResult();
+}
+</script>
+</body>
+</html>

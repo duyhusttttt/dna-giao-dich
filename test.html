@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Làm Bài Test — DNA Giao Dịch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Bấm copy toàn bộ nội dung trong thẻ <style> từ file gốc của bạn vào đây */
+    :root { --navy: #080D1A; --navy2: #0D1526; --card: #131E35; --card2: #19274A; --border: #1F2E4A; --border2: #2A3E62; --gold: #C9A84C; --gold2: #E8C97A; --gold-bg: rgba(201,168,76,0.08); --text: #E8EDF5; --sub: #6B7A99; --sub2: #8A9BB8; --green: #27AE60; --green2: #2ECC71; --red: #C0392B; --red2: #E74C3C; --yellow: #E67E22; --blue: #2980B9; --purple: #8E44AD; --radius: 12px; --radius2: 8px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.18; pointer-events: none; z-index: 0; }
+    #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+    .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(8,13,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.5px; }
+    .logo em { color: var(--gold); font-style: normal; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .phase-dots { display: flex; gap: 6px; }
+    .pdot { width: 7px; height: 7px; border-radius: 50%; background: var(--border2); transition: all .3s; }
+    .pdot.done { background: var(--gold); }
+    .pdot.active { background: var(--gold); box-shadow: 0 0 8px var(--gold); transform: scale(1.3); }
+    .candle-strip { display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-bottom: 1px solid var(--border); background: var(--navy2); }
+    .phase-lbl { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); white-space: nowrap; min-width: 120px; }
+    .candles { display: flex; gap: 3px; align-items: flex-end; flex: 1; }
+    .candle { width: 5px; border-radius: 1px; background: var(--border2); transition: background .25s, box-shadow .25s; flex-shrink: 0; }
+    .candle.lit  { background: var(--green2); }
+    .candle.curr { background: var(--gold); box-shadow: 0 0 5px var(--gold); }
+    .progress-lbl { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--sub); white-space: nowrap; }
+    #screen-quiz { display: flex; flex-direction: column; align-items: center; padding: 32px 20px 80px; }
+    .q-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; max-width: 620px; width: 100%; position: relative; }
+    .q-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .q-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; }
+    .b-EI { color:#5882FF; background:rgba(88,130,255,.12); border:1px solid rgba(88,130,255,.3); }
+    .b-SN { color:var(--green2); background:rgba(46,204,113,.12); border:1px solid rgba(46,204,113,.3); }
+    .b-TF { color:var(--gold); background:var(--gold-bg); border:1px solid rgba(201,168,76,.3); }
+    .b-JP { color:#A569BD; background:rgba(165,105,189,.12); border:1px solid rgba(165,105,189,.3); }
+    .b-G  { color:var(--red2); background:rgba(231,76,60,.12); border:1px solid rgba(231,76,60,.3); }
+    .q-num { font-size: 12px; color: var(--sub); font-family: 'Space Grotesk', sans-serif; margin-left: auto; }
+    .q-text { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 600; line-height: 1.6; margin-bottom: 24px; }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .opt { background: var(--navy2); border: 1px solid var(--border2); border-radius: var(--radius2); padding: 14px 16px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; transition: border-color .15s, background .15s; text-align: left; width: 100%; }
+    .opt:hover  { border-color: var(--gold); background: var(--gold-bg); }
+    .opt.sel    { border-color: var(--gold); background: var(--gold-bg); }
+    .opt-ltr    { font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:700; color:var(--gold); min-width:18px; margin-top:2px; }
+    .opt-txt    { font-size: 14px; color: var(--text); line-height: 1.6; }
+    .q-warn     { font-size:12px; color:var(--red2); margin-top:10px; display:none; }
+    .q-warn.show { display: block; }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 12px; }
+    .btn-back { background: transparent; border: 1px solid var(--border2); border-radius: var(--radius2); padding: 10px 20px; color: var(--sub); font-family: 'Space Grotesk', sans-serif; font-size: 13px; cursor: pointer; transition: all .2s; }
+    .btn-back:hover { border-color: var(--sub2); color: var(--text); }
+    .btn-next { background: var(--gold); border: none; border-radius: var(--radius2); padding: 10px 24px; color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: all .2s; opacity: .35; pointer-events: none; }
+    .btn-next.on { opacity: 1; pointer-events: all; }
+    .btn-next.on:hover { background: var(--gold2); }
+    .phase-banner { display: none; background: var(--card2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; max-width: 620px; width: 100%; text-align: center; margin-bottom: 24px; }
+    .phase-banner.show { display: block; }
+    .pb-icon { font-size: 36px; margin-bottom: 12px; }
+    .pb-title { font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:700; margin-bottom:8px; }
+    .pb-sub { font-size:13px; color:var(--sub2); margin-bottom:20px; line-height:1.6; }
+    .btn-continue { background: var(--gold); border: none; border-radius: var(--radius2); padding: 11px 28px; color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: background .2s; }
+    .btn-continue:hover { background: var(--gold2); }
+    .trader-modal-overlay { position: fixed; inset: 0; background: rgba(8,13,26,0.8); z-index: 200; display: flex; align-items: center; justify-content: center; }
+    .trader-modal { background: var(--card2); border: 1px solid var(--gold); border-radius: var(--radius); padding: 32px; max-width: 420px; width: 90%; text-align: center; }
+    .trader-modal h2 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin-bottom: 16px; color: var(--text); }
+    .trader-modal p { font-size: 14px; color: var(--sub2); margin-bottom: 24px; line-height: 1.6; }
+    .trader-modal-buttons { display: flex; gap: 12px; justify-content: center; }
+    .btn-yes { background: var(--gold); border: none; padding: 10px 24px; color: var(--navy); font-weight: 700; border-radius: var(--radius2); cursor: pointer; font-family: 'Space Grotesk', sans-serif; }
+    .btn-yes:hover { background: var(--gold2); }
+    .btn-no { background: transparent; border: 1px solid var(--border2); padding: 10px 24px; color: var(--sub); font-weight: 700; border-radius: var(--radius2); cursor: pointer; font-family: 'Space Grotesk', sans-serif; }
+    .btn-no:hover { border-color: var(--gold); color: var(--gold); }
+    #screen-loading { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; gap: 20px; text-align: center; height: 70vh; }
+    #screen-loading.active { display: flex; }
+    .spinner { width: 48px; height: 48px; border: 3px solid var(--border2); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-txt { font-family:'Space Grotesk',sans-serif; font-size:15px; color:var(--sub2); }
+    @media (max-width: 520px) { .q-card { padding:22px 18px; } .phase-lbl { min-width:80px; font-size:9px; } }
+  </style>
+</head>
+<body>
+<div id="app">
+  <header class="header">
+    <div class="logo">DNA <em>Giao Dịch</em></div>
+    <div class="header-right">
+      <div class="phase-dots" id="phaseDotsContainer"></div>
+    </div>
+  </header>
+
+  <div class="candle-strip" id="candleStrip">
+    <div class="phase-lbl" id="phaseLbl"></div>
+    <div class="candles" id="candlesEl"></div>
+    <div class="progress-lbl" id="progressLbl"></div>
+  </div>
+
+  <div id="screen-quiz">
+    <div style="display:flex;flex-direction:column;align-items:center;padding:32px 20px 80px;gap:16px;width:100%;">
+      <div class="phase-banner" id="phaseBanner">
+        <div class="pb-icon" id="pbIcon"></div>
+        <div class="pb-title" id="pbTitle"></div>
+        <div class="pb-sub" id="pbSub"></div>
+        <button class="btn-continue" onclick="dismissBanner()">Tiếp tục →</button>
+      </div>
+      <div class="q-card" id="qCard">
+        <div class="q-meta">
+          <div class="q-badge" id="qBadge"></div>
+          <div class="q-num" id="qNum"></div>
+        </div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="optsEl"></div>
+        <div class="q-warn" id="qWarn">Vui lòng chọn một đáp án.</div>
+        <div class="quiz-nav">
+          <button class="btn-back" id="btnBack" onclick="goBack()">← Quay lại</button>
+          <button class="btn-next" id="btnNext" onclick="goNext()">Tiếp theo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-loading">
+    <div class="spinner"></div>
+    <div class="loading-txt">Đang tính toán kết quả của bạn…</div>
+  </div>
+</div>
+
+<script>
+// Kiểm tra user data từ bước 1
+const userData = JSON.parse(sessionStorage.getItem('userData'));
+if(!userData) {
+  window.location.href = 'index.html';
+}
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+// Gắn toàn bộ const MBTI_Q = [...], TRADER_Q = [...], GAMBLER_Q = [...] của bạn vào đây
+// BẢN RÚT GỌN CHO MẪU - BẠN NHỚ DÁN FULL ARRAY CÂU HỎI VÀO
+const MBTI_Q = [
+  {dim:'EI',a0:'E',q:'Sau một ngày dài làm việc, bạn thích làm gì để phục hồi năng lượng?',opts:['Gặp gỡ bạn bè, ra ngoài để nạp lại năng lượng','Ở nhà một mình, nghỉ ngơi trong yên tĩnh']},
+  // ... Dán full 48 câu ... 
+  {dim:'JP',a0:'J',q:'Cuối ngày, bạn thường:',opts:['Review lại những việc đã hoàn thành trong danh sách','Nghĩ về những ý tưởng mới sẽ làm ngày mai']},
+];
+const TRADER_Q = [
+  {dim:'EI',a0:'E',q:'[T] Khi vào một lệnh lớn, bạn thường:',opts:['Muốn chia sẻ ngay lên group hoặc kể cho ai đó nghe','Tự mình theo dõi âm thầm, không cần ai biết']},
+  // ... Dán full 20 câu ...
+  {dim:'JP',a0:'J',q:'[T] Khi một lệnh đang lãi đẹp nhưng chưa chạm TP, bạn:',opts:['Giữ nguyên theo plan, không close sớm dù rất muốn chốt lời','Thường close một phần hoặc toàn bộ vì sợ thị trường quay đầu']},
+];
+const GAMBLER_Q = [
+  {q:'Lý do chính bạn bắt đầu trading là gì?',opts:['Muốn xây nguồn thu nhập ổn định, có hệ thống','Muốn tự do tài chính nhanh, không muốn đi làm thuê','Thấy người khác kiếm nhiều tiền, muốn thử xem'],sc:[0,1,2]},
+  // ... Dán full 10 câu ...
+  {q:'Với bạn, một tháng trading thành công là khi:',opts:['Thực hiện đúng plan, winrate và RR trong kỳ vọng thống kê','Có lãi, dù ít','Kiếm được số tiền đủ để thay đổi cuộc sống ngay tháng đó'],sc:[0,1,2]},
+];
+
+const ALL_Q = [...MBTI_Q, ...TRADER_Q, ...GAMBLER_Q];
+const PHASES = [
+  {start:0, len:MBTI_Q.length, label:'MBTI Tính Cách', icon:'🧠', desc:'48 câu hỏi về tính cách tổng quát.'},
+  {start:MBTI_Q.length, len:TRADER_Q.length, label:'MBTI Trader', icon:'📈', desc:'20 câu hỏi trong bối cảnh trading.'},
+  {start:MBTI_Q.length+TRADER_Q.length, len:GAMBLER_Q.length, label:'Gambler Index', icon:'⚠️', desc:'10 câu đánh giá rủi ro tâm lý.'},
+];
+
+let answers = new Array(ALL_Q.length).fill(null);
+let cur = 0;
+let totalQuestions = MBTI_Q.length; 
+let isTrader = undefined; 
+let showingBanner = false;
+let traderModalActive = false;
+
+function flip(c){return {E:'I',I:'E',S:'N',N:'S',T:'F',F:'T',J:'P',P:'J'}[c];}
+function getPhaseIdx(i){ for(let p=PHASES.length-1;p>=0;p--) if(i>=PHASES[p].start) return p; return 0; }
+function typeStr(s){ return (s.E>=s.I?'E':'I')+(s.S>=s.N?'S':'N')+(s.T>=s.F?'T':'F')+(s.J>=s.P?'J':'P'); }
+
+function updatePhaseDots(activePhase){
+  const container = document.getElementById('phaseDotsContainer');
+  const maxPhases = isTrader ? 3 : 1;
+  container.innerHTML = '';
+  for(let i=0;i<maxPhases;i++){
+    const dot = document.createElement('div');
+    dot.className = 'pdot' + (i < activePhase ? ' done' : i === activePhase ? ' active' : '');
+    container.appendChild(dot);
+  }
+}
+
+function renderCandles(){
+  const phaseIdx = getPhaseIdx(cur);
+  const ph = PHASES[phaseIdx];
+  document.getElementById('phaseLbl').textContent = isTrader ? ph.label : 'MBTI Tính Cách';
+  const local = cur - ph.start;
+  const total = ph.len;
+  const show = Math.min(total, 24);
+  const el = document.getElementById('candlesEl');
+  el.innerHTML = '';
+  const heights = [14,18,12,20,16,14,22,18,12,16,20,14,18,12,20,16,14,22,18,12,16,20,14,18];
+  for(let i=0;i<show;i++){
+    const c = document.createElement('div');
+    const thr = Math.floor(i * total / show);
+    c.className = 'candle' + (thr < local ? ' lit' : thr === local ? ' curr' : '');
+    c.style.height = heights[i % heights.length] + 'px';
+    el.appendChild(c);
+  }
+  document.getElementById('progressLbl').textContent = (local+1)+' / '+total;
+}
+
+const DIM_BADGE = {EI:'b-EI',SN:'b-SN',TF:'b-TF',JP:'b-JP',G:'b-G'};
+const DIM_NAME  = {EI:'Năng Lượng',SN:'Nhận Thức',TF:'Quyết Định',JP:'Lối Sống',G:'Gambler Index'};
+const LETTERS = ['A','B','C'];
+
+function renderQ(){
+  const q = ALL_Q[cur];
+  const isG = cur >= MBTI_Q.length + TRADER_Q.length;
+  const dim = isG ? 'G' : q.dim;
+
+  updatePhaseDots(getPhaseIdx(cur));
+  renderCandles();
+
+  const badge = document.getElementById('qBadge');
+  badge.className = 'q-badge ' + DIM_BADGE[dim];
+  badge.textContent = DIM_NAME[dim];
+  document.getElementById('qNum').textContent = (cur+1)+' / '+totalQuestions;
+  document.getElementById('qText').textContent = q.q.replace(/^\[T\] /,'');
+  
+  const wrap = document.getElementById('optsEl');
+  wrap.innerHTML = '';
+  q.opts.forEach((o,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'opt' + (answers[cur]===i ? ' sel' : '');
+    btn.innerHTML = `<span class="opt-ltr">${LETTERS[i]}</span><span class="opt-txt">${o}</span>`;
+    btn.onclick = ()=>selectOpt(i);
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('qWarn').classList.remove('show');
+  document.getElementById('btnBack').style.visibility = cur===0 ? 'hidden' : 'visible';
+  const nb = document.getElementById('btnNext');
+  nb.textContent = cur===totalQuestions-1 ? 'Xem kết quả ✓' : 'Tiếp theo →';
+  answers[cur]!==null ? nb.classList.add('on') : nb.classList.remove('on');
+}
+
+function selectOpt(i){
+  answers[cur] = i;
+  document.querySelectorAll('.opt').forEach((b,idx)=>b.classList.toggle('sel', idx===i));
+  document.getElementById('btnNext').classList.add('on');
+  document.getElementById('qWarn').classList.remove('show');
+}
+
+function showPhaseBanner(phaseIdx){
+  showingBanner = true;
+  document.getElementById('qCard').style.display = 'none';
+  const b = document.getElementById('phaseBanner');
+  const ph = PHASES[phaseIdx];
+  document.getElementById('pbIcon').textContent = ph.icon;
+  document.getElementById('pbTitle').textContent = ph.label;
+  document.getElementById('pbSub').textContent = ph.desc;
+  b.classList.add('show');
+  updatePhaseDots(phaseIdx);
+}
+
+function dismissBanner(){
+  showingBanner = false;
+  document.getElementById('phaseBanner').classList.remove('show');
+  document.getElementById('qCard').style.display = 'block';
+  renderQ();
+}
+
+function goNext(){
+  if(showingBanner){ dismissBanner(); return; }
+  if(answers[cur]===null){ document.getElementById('qWarn').classList.add('show'); return; }
+
+  if(cur === MBTI_Q.length - 1 && isTrader === undefined && !traderModalActive){
+    showTraderModal();
+    return;
+  }
+
+  if(cur === totalQuestions - 1){
+    submitResults();
+    return;
+  }
+
+  const curPhase = getPhaseIdx(cur);
+  cur++;
+  const nextPhase = getPhaseIdx(cur);
+  if(nextPhase > curPhase){
+    showPhaseBanner(nextPhase);
+  } else {
+    renderQ();
+  }
+}
+
+function goBack(){
+  if(showingBanner){
+    document.getElementById('phaseBanner').classList.remove('show');
+    document.getElementById('qCard').style.display = 'block';
+    showingBanner = false;
+    if(cur > 0) cur--;
+    renderQ();
+    return;
+  }
+  if(cur > 0){ cur--; renderQ(); }
+}
+
+function showTraderModal(){
+  traderModalActive = true;
+  const overlay = document.createElement('div');
+  overlay.className = 'trader-modal-overlay';
+  overlay.innerHTML = `
+    <div class="trader-modal">
+      <h2>📊 Bạn có phải là Trader không?</h2>
+      <p>Bạn có tham gia giao dịch tài chính (crypto, chứng khoán, forex, v.v.) một cách thường xuyên?</p>
+      <div class="trader-modal-buttons">
+        <button class="btn-yes" id="btnYesTrader">Có, tôi là Trader</button>
+        <button class="btn-no" id="btnNoTrader">Không</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  document.getElementById('btnYesTrader').onclick = ()=>{
+    document.body.removeChild(overlay);
+    traderModalActive = false;
+    isTrader = true;
+    totalQuestions = ALL_Q.length; 
+    cur++; 
+    showPhaseBanner(1);
+  };
+  document.getElementById('btnNoTrader').onclick = ()=>{
+    document.body.removeChild(overlay);
+    traderModalActive = false;
+    isTrader = false;
+    submitResults();
+  };
+}
+
+function calcMBTIScores(questions, startIdx){
+  const s = {E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+  questions.forEach((q,i)=>{
+    const ans = answers[startIdx+i];
+    if(ans == null) return;
+    const chosen = ans === 0 ? q.a0 : flip(q.a0);
+    s[chosen]++;
+  });
+  return s;
+}
+
+function calcGamblerScore(){
+  let total = 0;
+  GAMBLER_Q.forEach((q,i)=>{
+    const ans = answers[MBTI_Q.length + TRADER_Q.length + i];
+    if(ans != null) total += q.sc[ans];
+  });
+  return total;
+}
+
+function submitResults(){
+  document.getElementById('screen-quiz').style.display = 'none';
+  document.getElementById('candleStrip').style.display = 'none';
+  document.getElementById('screen-loading').classList.add('active');
+
+  const mbtiGeneralScores = calcMBTIScores(MBTI_Q, 0);
+  const mbtiGeneralType = typeStr(mbtiGeneralScores);
+
+  let payload = {
+    name: userData.name,
+    age: userData.age,
+    email: userData.email,
+    job: userData.job,
+    mbti_general: mbtiGeneralType,
+    is_trader: isTrader,
+    timestamp: new Date().toISOString()
+  };
+
+  let resultData = {
+    isTrader: isTrader,
+    userData: userData,
+    mg: mbtiGeneralType,
+    scores: mbtiGeneralScores,
+    mt: null,
+    mc: mbtiGeneralType,
+    gamblerScore: -1
+  };
+
+  if (isTrader) {
+    const mbtiTraderScores = calcMBTIScores(TRADER_Q, MBTI_Q.length);
+    const mbtiTraderType = typeStr(mbtiTraderScores);
+    const combinedScores = {
+      E: mbtiGeneralScores.E + mbtiTraderScores.E, I: mbtiGeneralScores.I + mbtiTraderScores.I,
+      S: mbtiGeneralScores.S + mbtiTraderScores.S, N: mbtiGeneralScores.N + mbtiTraderScores.N,
+      T: mbtiGeneralScores.T + mbtiTraderScores.T, F: mbtiGeneralScores.F + mbtiTraderScores.F,
+      J: mbtiGeneralScores.J + mbtiTraderScores.J, P: mbtiGeneralScores.P + mbtiTraderScores.P
+    };
+    const mbtiCombinedType = typeStr(combinedScores);
+    const gamblerScore = calcGamblerScore();
+
+    Object.assign(payload, {
+      mbti_trader: mbtiTraderType,
+      mbti_combined: mbtiCombinedType,
+      gambler_score: gamblerScore,
+      scores_E: combinedScores.E, scores_I: combinedScores.I,
+      scores_S: combinedScores.S, scores_N: combinedScores.N,
+      scores_T: combinedScores.T, scores_F: combinedScores.F,
+      scores_J: combinedScores.J, scores_P: combinedScores.P
+    });
+
+    resultData.scores = combinedScores;
+    resultData.mt = mbtiTraderType;
+    resultData.mc = mbtiCombinedType;
+    resultData.gamblerScore = gamblerScore;
+  } else {
+    payload.mbti_trader = "N/A";
+    payload.mbti_combined = mbtiGeneralType;
+    payload.gambler_score = "N/A";
+  }
+
+  // Đẩy dữ liệu tính toán cho trang Result
+  sessionStorage.setItem('resultData', JSON.stringify(resultData));
+
+  // Bắn ngầm qua Apps Script
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).finally(() => {
+    // Không cần đợi response, chuyển hướng luôn cho mượt
+    window.location.href = 'result.html';
+  });
+}
+
+// Khởi chạy câu hỏi đầu tiên
+showPhaseBanner(0);
+</script>
+</body>
+</html>
