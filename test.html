@@ -132,23 +132,97 @@ if(!userData) {
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
-// Gắn toàn bộ const MBTI_Q = [...], TRADER_Q = [...], GAMBLER_Q = [...] của bạn vào đây
-// BẢN RÚT GỌN CHO MẪU - BẠN NHỚ DÁN FULL ARRAY CÂU HỎI VÀO
+
+// ============================================================
+// QUESTION DATA
+// ============================================================
 const MBTI_Q = [
   {dim:'EI',a0:'E',q:'Sau một ngày dài làm việc, bạn thích làm gì để phục hồi năng lượng?',opts:['Gặp gỡ bạn bè, ra ngoài để nạp lại năng lượng','Ở nhà một mình, nghỉ ngơi trong yên tĩnh']},
-  // ... Dán full 48 câu ... 
+  {dim:'EI',a0:'I',q:'Tại một buổi tiệc lớn đông người, bạn thường:',opts:['Cảm thấy mệt mỏi và muốn rời đi sớm','Cảm thấy hứng khởi và muốn ở lại lâu hơn']},
+  {dim:'EI',a0:'E',q:'Khi gặp vấn đề cần giải quyết, bạn thường:',opts:['Thảo luận với người khác để tìm giải pháp','Tự suy nghĩ một mình trước khi hỏi ai']},
+  {dim:'EI',a0:'I',q:'Bạn làm việc hiệu quả hơn khi:',opts:['Làm việc độc lập trong không gian yên tĩnh','Làm việc nhóm trong môi trường sôi nổi']},
+  {dim:'EI',a0:'E',q:'Khi có tin vui, phản ứng đầu tiên của bạn là:',opts:['Gọi ngay cho bạn bè / gia đình để chia sẻ','Tự mình tận hưởng cảm giác đó trước']},
+  {dim:'EI',a0:'I',q:'Trong cuộc họp hoặc lớp học, bạn thường:',opts:['Quan sát và lắng nghe trước khi phát biểu','Chủ động phát biểu và đặt câu hỏi ngay']},
+  {dim:'EI',a0:'E',q:'Bạn có xu hướng có:',opts:['Nhiều bạn bè quen biết rộng','Ít bạn nhưng thân thiết sâu sắc']},
+  {dim:'EI',a0:'I',q:'Khi cần ra quyết định quan trọng, bạn:',opts:['Suy ngẫm lâu trong đầu trước khi nói ra','Nói ra suy nghĩ để người khác phản hồi giúp']},
+  {dim:'EI',a0:'E',q:'Môi trường làm việc lý tưởng của bạn là:',opts:['Văn phòng mở, tương tác nhiều với đồng nghiệp','Phòng riêng hoặc góc yên tĩnh ít bị làm phiền']},
+  {dim:'EI',a0:'I',q:'Sau khi trình bày hoặc thuyết trình xong, bạn cảm thấy:',opts:['Mệt mỏi, cần thời gian phục hồi một mình','Phấn khích và muốn tiếp tục trò chuyện']},
+  {dim:'EI',a0:'E',q:'Bạn thường học hoặc hiểu vấn đề tốt hơn khi:',opts:['Giải thích cho người khác hoặc thảo luận nhóm','Đọc, nghiên cứu và tự xử lý thông tin']},
+  {dim:'EI',a0:'I',q:'Cuối tuần lý tưởng của bạn là:',opts:['Đọc sách, xem phim hoặc làm gì đó một mình','Đi chơi, tham gia sự kiện hoặc tụ tập nhóm']},
+  {dim:'SN',a0:'N',q:'Khi đọc sách, bạn thích loại nào hơn?',opts:['Khoa học viễn tưởng, triết học hoặc ý tưởng trừu tượng','Hướng dẫn thực tế, truyện ký có sự kiện cụ thể']},
+  {dim:'SN',a0:'S',q:'Khi giải quyết vấn đề, bạn thường bắt đầu từ:',opts:['Các dữ kiện và thông tin cụ thể có sẵn','Bức tranh tổng thể và khả năng tương lai']},
+  {dim:'SN',a0:'N',q:'Bạn tin tưởng hơn vào:',opts:['Trực giác và linh cảm nội tâm','Kinh nghiệm thực tế và dữ liệu đo lường được']},
+  {dim:'SN',a0:'S',q:'Khi nghe mô tả về điều gì đó, bạn chú ý đến:',opts:['Chi tiết cụ thể, con số, sự kiện thực tế','Ý nghĩa, biểu tượng, khả năng ẩn sau đó']},
+  {dim:'SN',a0:'N',q:'Bạn thường cảm thấy hứng thú hơn với:',opts:['Câu hỏi "Điều gì có thể xảy ra?" hoặc "Tại sao?"','Câu hỏi "Điều gì đang xảy ra?" hoặc "Như thế nào?"']},
+  {dim:'SN',a0:'S',q:'Khi học kỹ năng mới, bạn thích:',opts:['Học từng bước một theo hướng dẫn cụ thể','Nắm khái niệm tổng quan rồi tự khám phá']},
+  {dim:'SN',a0:'N',q:'Trong công việc, bạn thường:',opts:['Thích tìm cách mới, cải tiến quy trình','Thích làm theo quy trình đã được kiểm chứng']},
+  {dim:'SN',a0:'S',q:'Bạn mô tả bản thân mình là người:',opts:['Thực tế, chú ý chi tiết, đáng tin cậy','Sáng tạo, mơ mộng, hay đặt câu hỏi "Nếu như..."']},
+  {dim:'SN',a0:'N',q:'Khi gặp một tình huống mới, bạn:',opts:['Tìm kiếm mẫu, kết nối với ý tưởng lớn hơn','So sánh với kinh nghiệm và tình huống quen thuộc']},
+  {dim:'SN',a0:'S',q:'Bạn thích làm việc với:',opts:['Con số, dữ liệu, sự thật có thể kiểm chứng','Ý tưởng, lý thuyết, khả năng chưa được khai phá']},
+  {dim:'SN',a0:'N',q:'Bạn thường ra quyết định dựa trên:',opts:['Cảm giác sẽ xảy ra — linh cảm về tương lai','Những gì đã xảy ra trước đây — bằng chứng lịch sử']},
+  {dim:'SN',a0:'S',q:'Khi đọc hướng dẫn kỹ thuật, bạn:',opts:['Đọc từng bước, thực hành theo đúng thứ tự','Lướt qua để nắm ý chính, tự điều chỉnh khi làm']},
+  {dim:'TF',a0:'F',q:'Khi bạn bè gặp vấn đề, điều đầu tiên bạn làm là:',opts:['Lắng nghe và thể hiện sự đồng cảm với cảm xúc của họ','Phân tích vấn đề và đưa ra giải pháp thực tế']},
+  {dim:'TF',a0:'T',q:'Khi đưa ra quyết định quan trọng, bạn ưu tiên:',opts:['Logic, tính nhất quán và hiệu quả khách quan','Tác động đến con người và cảm xúc liên quan']},
+  {dim:'TF',a0:'F',q:'Nếu phải chọn giữa công bằng và nhân từ, bạn:',opts:['Nghiêng về nhân từ nếu hoàn cảnh đặc biệt','Ưu tiên công bằng dù hoàn cảnh thế nào']},
+  {dim:'TF',a0:'T',q:'Khi nhận phê bình, bạn thường:',opts:['Đánh giá liệu phê bình đó có hợp lý về mặt logic không','Cảm nhận xem người phê bình có thiện ý không trước']},
+  {dim:'TF',a0:'F',q:'Trong nhóm làm việc, bạn thường là người:',opts:['Chú ý đến bầu không khí cảm xúc và giải quyết xung đột','Tập trung vào mục tiêu và phân tích hiệu quả nhóm']},
+  {dim:'TF',a0:'T',q:'Khi tranh luận, bạn thường:',opts:['Bám vào lý lẽ logic và bằng chứng khách quan','Cân nhắc cả cảm xúc và quan điểm cá nhân của mọi người']},
+  {dim:'TF',a0:'F',q:'Bạn cho rằng tình cảm trong công việc:',opts:['Quan trọng vì con người là trung tâm của mọi quyết định','Nên được kiểm soát để không ảnh hưởng đến lý trí']},
+  {dim:'TF',a0:'T',q:'Khi cần từ chối ai đó, bạn thường:',opts:['Nói thẳng lý do dù có thể gây khó chịu','Cố tìm cách nói để không làm tổn thương cảm xúc họ']},
+  {dim:'TF',a0:'F',q:'Điều khiến bạn thỏa mãn nhất trong công việc là:',opts:['Tạo ra tác động tích cực cho người khác','Hoàn thành mục tiêu và đạt hiệu quả cao nhất']},
+  {dim:'TF',a0:'T',q:'Khi ai đó đưa ra ý kiến sai, bạn:',opts:['Sẵn sàng chỉ ra lỗi sai một cách thẳng thắn','Cân nhắc kỹ trước khi nói để không làm họ mất mặt']},
+  {dim:'TF',a0:'F',q:'Trong cuộc sống, bạn coi trọng hơn:',opts:['Sự hòa hợp và kết nối với người xung quanh','Sự thành thật và tính nguyên tắc dù gây mâu thuẫn']},
+  {dim:'TF',a0:'T',q:'Khi phải quyết định nhanh dưới áp lực, bạn:',opts:['Dựa vào phân tích nhanh và tiêu chí rõ ràng','Dựa vào cảm giác và giá trị cá nhân']},
+  {dim:'JP',a0:'P',q:'Khi đi du lịch, bạn thường:',opts:['Đặt lịch linh hoạt, khám phá theo hứng thú','Lên kế hoạch chi tiết trước để mọi thứ suôn sẻ']},
+  {dim:'JP',a0:'J',q:'Deadline và thời hạn đối với bạn:',opts:['Là mốc quan trọng cần hoàn thành sớm hoặc đúng hạn','Là hướng dẫn tham khảo, có thể điều chỉnh nếu cần']},
+  {dim:'JP',a0:'P',q:'Bàn làm việc của bạn thường trông như thế nào?',opts:['Khá lộn xộn nhưng bạn biết mọi thứ ở đâu','Gọn gàng, có tổ chức rõ ràng theo hệ thống']},
+  {dim:'JP',a0:'J',q:'Khi bắt đầu một dự án mới, bạn:',opts:['Lập kế hoạch chi tiết với các bước rõ ràng trước','Bắt tay làm ngay và điều chỉnh khi cần']},
+  {dim:'JP',a0:'P',q:'Bạn cảm thấy thế nào khi kế hoạch thay đổi đột ngột?',opts:['Khá thoải mái, xem đó là cơ hội thú vị','Không thoải mái, cần thời gian điều chỉnh lại']},
+  {dim:'JP',a0:'J',q:'Khi mua sắm, bạn thường:',opts:['Nghiên cứu kỹ, quyết định trước khi đến cửa hàng','Đến xem rồi quyết định theo cảm hứng']},
+  {dim:'JP',a0:'P',q:'Trong công việc hằng ngày, bạn:',opts:['Thích giữ nhiều lựa chọn mở, không muốn bị ràng buộc','Thích biết rõ mình phải làm gì từ sáng đến tối']},
+  {dim:'JP',a0:'J',q:'Khi cần hoàn thành nhiều việc, bạn:',opts:['Lập danh sách ưu tiên và thực hiện theo thứ tự','Làm theo cảm hứng, việc nào hứng thì làm trước']},
+  {dim:'JP',a0:'P',q:'Bạn thấy bản thân mình:',opts:['Linh hoạt, thích nghi tốt với mọi tình huống','Có nguyên tắc, thích sự ổn định và trật tự']},
+  {dim:'JP',a0:'J',q:'Khi dự án hoàn thành sớm, bạn cảm thấy:',opts:['Nhẹ nhõm và hài lòng vì đã xong xuôi','Thấy thiếu điều gì đó nếu không còn gì để khám phá']},
+  {dim:'JP',a0:'P',q:'Bạn ra quyết định như thế nào?',opts:['Thường trì hoãn để xem có thêm thông tin không','Ra quyết định nhanh để có thể bước tiếp']},
   {dim:'JP',a0:'J',q:'Cuối ngày, bạn thường:',opts:['Review lại những việc đã hoàn thành trong danh sách','Nghĩ về những ý tưởng mới sẽ làm ngày mai']},
 ];
+
 const TRADER_Q = [
   {dim:'EI',a0:'E',q:'[T] Khi vào một lệnh lớn, bạn thường:',opts:['Muốn chia sẻ ngay lên group hoặc kể cho ai đó nghe','Tự mình theo dõi âm thầm, không cần ai biết']},
-  // ... Dán full 20 câu ...
+  {dim:'EI',a0:'E',q:'[T] Sau một chuỗi thua lỗ, bạn phục hồi tốt hơn khi:',opts:['Nói chuyện với trader khác, nghe góc nhìn cộng đồng','Ngồi một mình review lại toàn bộ lệnh, tự tìm nguyên nhân']},
+  {dim:'EI',a0:'I',q:'[T] Khi phân tích chart, bạn thích:',opts:['Làm việc trong không gian yên tĩnh, không bị ngắt quãng','Vừa phân tích vừa trao đổi live với người khác']},
+  {dim:'EI',a0:'E',q:'[T] Trong trading room hoặc group signal, bạn thường:',opts:['Chủ động chia sẻ setup và nhận xét phân tích của người khác','Quan sát, đọc phân tích nhưng hiếm khi đăng']},
+  {dim:'EI',a0:'I',q:'[T] Ý tưởng trade tốt nhất của bạn đến khi:',opts:['Thảo luận và brainstorm cùng trader khác','Ngồi một mình nghiên cứu, không bị ảnh hưởng bởi ai']},
+  {dim:'SN',a0:'S',q:'[T] Khi phân tích một cặp tiền / cổ phiếu, bạn thường bắt đầu từ:',opts:['Chart kỹ thuật — price action, indicator, level cụ thể','Bức tranh macro — tâm lý thị trường, trend lớn, câu chuyện đằng sau']},
+  {dim:'SN',a0:'S',q:'[T] Khi backtest một chiến lược, bạn tin tưởng nhất vào:',opts:['Con số thống kê cụ thể: winrate, RR, max drawdown','Cảm giác rằng logic chiến lược này "có lý" về mặt cấu trúc thị trường']},
+  {dim:'SN',a0:'S',q:'[T] Một setup trading lý tưởng với bạn là:',opts:['Có đủ điều kiện xác nhận rõ ràng theo checklist','Cảm giác thị trường đang "nói" điều gì đó, dù chưa đủ xác nhận kỹ thuật']},
+  {dim:'SN',a0:'S',q:'[T] Khi thị trường có tin tức bất ngờ (NFP, FOMC...), bạn:',opts:['Bỏ qua nếu không nằm trong plan, chờ thị trường settle','Ngay lập tức phân tích xem điều này thay đổi bức tranh lớn như thế nào']},
+  {dim:'SN',a0:'S',q:'[T] Phong cách trade của bạn dựa trên:',opts:['Pattern lặp lại, quy tắc rõ ràng đã được chứng minh','Hiểu biết về cấu trúc thị trường và dự đoán hành vi smart money']},
+  {dim:'TF',a0:'T',q:'[T] Khi một lệnh đang chạy ngược chiều -2R, bạn:',opts:['Kiểm tra lại logic ban đầu — nếu setup vẫn valid thì giữ nguyên','Cảm thấy lo lắng và có xu hướng đóng lệnh sớm để tránh căng thẳng']},
+  {dim:'TF',a0:'T',q:'[T] Khi thấy một người trong group vừa lỗ nặng, điều đầu tiên bạn nghĩ:',opts:['Họ đã sai ở đâu trong hệ thống? Risk management có vấn đề gì?','Họ đang cảm thấy thế nào? Mình có thể hỗ trợ tinh thần họ không?']},
+  {dim:'TF',a0:'T',q:'[T] Khi xây dựng chiến lược, yếu tố bạn ưu tiên nhất:',opts:['Expectancy dương về mặt thống kê, rõ ràng về số','Chiến lược phải "cảm thấy đúng" với tính cách và phong cách của mình']},
+  {dim:'TF',a0:'T',q:'[T] Sau một tháng thua lỗ liên tiếp, bạn:',opts:['Phân tích dữ liệu lệnh, tìm lỗi hệ thống, điều chỉnh tham số','Cần thời gian xử lý cảm xúc, tự hỏi mình có phù hợp với trading không']},
+  {dim:'TF',a0:'T',q:'[T] Với bạn, một trader giỏi là người:',opts:['Ra quyết định thuần dựa trên dữ liệu, không để cảm xúc ảnh hưởng','Hiểu được tâm lý của mình và thị trường, biết khi nào nên dừng']},
+  {dim:'JP',a0:'J',q:'[T] Trading plan của bạn trông như thế nào?',opts:['Có rule rõ ràng: entry, SL, TP, risk % — và tuân thủ gần như tuyệt đối','Có khung tổng quát nhưng hay điều chỉnh linh hoạt theo từng tình huống']},
+  {dim:'JP',a0:'J',q:'[T] Khi thị trường chưa có setup theo kế hoạch, bạn:',opts:['Không vào lệnh, dù tay rất ngứa — không có setup là không trade','Đôi khi vào "lệnh thử" nhỏ vì cảm thấy cơ hội này trông khá ổn']},
+  {dim:'JP',a0:'J',q:'[T] Với bạn, việc di chuyển SL lên breakeven sớm hơn plan:',opts:['Là sai — phải tuân theo plan đã định, không thay đổi trong lệnh','Đôi khi hợp lý nếu thị trường cho thấy tín hiệu yếu đi']},
+  {dim:'JP',a0:'J',q:'[T] Cuối tuần, bạn thường:',opts:['Đã có danh sách pair theo dõi tuần tới, bias rõ ràng cho từng cặp','Mở chart vào thứ Hai rồi phân tích theo diễn biến thực tế']},
   {dim:'JP',a0:'J',q:'[T] Khi một lệnh đang lãi đẹp nhưng chưa chạm TP, bạn:',opts:['Giữ nguyên theo plan, không close sớm dù rất muốn chốt lời','Thường close một phần hoặc toàn bộ vì sợ thị trường quay đầu']},
 ];
+
 const GAMBLER_Q = [
   {q:'Lý do chính bạn bắt đầu trading là gì?',opts:['Muốn xây nguồn thu nhập ổn định, có hệ thống','Muốn tự do tài chính nhanh, không muốn đi làm thuê','Thấy người khác kiếm nhiều tiền, muốn thử xem'],sc:[0,1,2]},
-  // ... Dán full 10 câu ...
+  {q:'Khi bạn vừa nhấn Buy / Sell, cảm giác đầu tiên là:',opts:['Bình thường, vì đây là setup nằm trong plan','Hơi hồi hộp, nhưng kiểm soát được','Cảm giác hứng khởi, tim đập nhanh hơn'],sc:[0,1,2]},
+  {q:'Khi thị trường không có setup nào phù hợp, bạn cảm thấy:',opts:['Bình thường — không có setup là không trade','Hơi bứt rứt nhưng vẫn giữ được','Khó chịu, tay ngứa, cuối cùng vẫn tìm cớ để vào lệnh'],sc:[0,1,2]},
+  {q:'Khi vừa thua một lệnh lớn, phản ứng ngay lập tức của bạn là:',opts:['Ghi chép lại lỗi, đợi setup tiếp theo theo đúng plan','Nghỉ ngơi một chút rồi quay lại','Muốn vào lệnh ngay để gỡ lại số vừa mất'],sc:[0,1,2]},
+  {q:'Bạn có bao giờ tăng size lệnh vì "cảm thấy chắc chắn" về setup này không?',opts:['Không — size cố định theo % risk mỗi lệnh','Thỉnh thoảng tăng nhẹ khi setup rất rõ','Có, khi tôi "chắc" là tôi bet lớn hơn nhiều'],sc:[0,1,2]},
+  {q:'Vốn bạn đang dùng để trade đến từ đâu?',opts:['Tiền nhàn rỗi, mất đi cũng không ảnh hưởng cuộc sống','Một phần tiết kiệm, mất thì khó chịu nhưng chịu được','Tiền sinh hoạt, tiền vay, hoặc tiền không nên mất'],sc:[0,1,2]},
+  {q:'Khi lệnh đang lãi gấp 3–5 lần mục tiêu ban đầu, bạn thường:',opts:['Chốt theo plan hoặc trailing stop đã định','Để thêm một chút, nhưng có điểm cắt rõ ràng','Giữ nguyên vì "nó còn đi tiếp" và thêm lệnh vào'],sc:[0,1,2]},
+  {q:'Kỳ vọng lợi nhuận hằng tháng của bạn từ trading là bao nhiêu?',opts:['3–10%/tháng — thực tế và bền vững','10–30%/tháng — cao nhưng không phải không thể','50%+/tháng, hoặc "càng nhiều càng tốt"'],sc:[0,1,2]},
+  {q:'Khi bận việc khác và không theo dõi được thị trường, bạn cảm thấy:',opts:['Thoải mái vì đã có SL/TP rồi, hệ thống tự xử lý','Hơi lo nhưng kiểm soát được','Bồn chồn, liên tục tìm cách check điện thoại'],sc:[0,1,2]},
   {q:'Với bạn, một tháng trading thành công là khi:',opts:['Thực hiện đúng plan, winrate và RR trong kỳ vọng thống kê','Có lãi, dù ít','Kiếm được số tiền đủ để thay đổi cuộc sống ngay tháng đó'],sc:[0,1,2]},
 ];
+
 
 const ALL_Q = [...MBTI_Q, ...TRADER_Q, ...GAMBLER_Q];
 const PHASES = [
