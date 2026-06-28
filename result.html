@@ -54,10 +54,9 @@
     .g-max { font-size:14px; color:var(--sub); }
     .g-bar { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
     .g-fill { height:100%; border-radius:3px; transition:width .9s ease; }
-    /* CTA BLOCK */
     .cta-block { background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(41,128,185,0.05)); border: 1px solid rgba(201,168,76,0.35); border-radius: var(--radius); padding: 24px 22px; margin-bottom: 10px; }
-    .cta-block .cta-hook { font-size: 14px; color: var(--text); line-height: 1.8; margin-bottom: 18px; }
-    .cta-block .cta-hook strong { color: var(--gold); }
+    .cta-hook { font-size: 14px; color: var(--text); line-height: 1.8; margin-bottom: 18px; }
+    .cta-hook strong { color: var(--gold); }
     .btn-tele { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; background: #229ED9; border: none; border-radius: var(--radius2); color: #fff; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: all .2s; letter-spacing: 0.3px; }
     .btn-tele:hover { background: #1a8bbf; transform: translateY(-1px); }
     .cta-sub { font-size: 11px; color: var(--sub); text-align: center; margin-top: 10px; }
@@ -83,345 +82,342 @@ if (!resultData) { window.location.href = 'index.html'; }
 
 const TELE_LINK = 'https://t.me/duyleez';
 
-// ============================================================
-// 16 TYPE — NỘI DUNG ĐẦY ĐỦ
-// ============================================================
 const MBTI_TRADER_INFO = {
 
   ISTJ: {
     name: 'Người Hậu Cần',
-    style: 'Rule-Based Mechanical Trader',
-    identity: `Bạn là người hiếm hoi trong cộng đồng trader thực sự <em>đọc hết</em> trading plan trước khi vào lệnh. Ngón tay bạn luôn dừng lại đúng lúc — không phải vì sợ, mà vì rule chưa cho phép. Trong một thị trường mà 90% người trade bằng cảm xúc, đây không phải điểm yếu. Đây là lợi thế cạnh tranh thật sự.`,
+    style: 'Giao dịch theo quy tắc',
+    identity: `Bạn là người hiếm hoi trong cộng đồng trader thực sự <em>đọc hết</em> kế hoạch giao dịch trước khi vào lệnh. Ngón tay bạn luôn dừng lại đúng lúc — không phải vì sợ, mà vì quy tắc chưa cho phép. Trong một thị trường mà 90% người giao dịch bằng cảm xúc, đây không phải điểm yếu. Đây là lợi thế cạnh tranh thật sự.`,
     strengths: [
       'Bạn có thể ngồi nhìn thị trường chạy mà không vào lệnh — và không cảm thấy mình bỏ lỡ gì',
-      'Journal của bạn có đủ dữ liệu để backtest lại hành vi của chính mình',
-      'Bạn không bị cuốn theo FOMO khi group ồn ào về một coin đang pump',
-      'Khi thua lỗ, câu hỏi đầu tiên là "sai ở đâu trong system?" — không phải đổ lỗi thị trường',
-      'Bạn có thể chạy cùng một chiến lược 6 tháng mà không chán, trong khi người khác đổi method mỗi tuần',
-      'Sizing nhất quán — 1% risk là 1%, không phải "lần này 3% vì trông chắc quá"',
-      'Bạn không cần ai xác nhận setup — đủ điều kiện là vào, thiếu là không',
-      'Kết quả tháng của bạn ổn định hơn phần lớn trader cùng level vốn'
+      'Nhật ký giao dịch của bạn đủ dữ liệu để kiểm tra lại hành vi của chính mình',
+      'Bạn không bị cuốn theo FOMO khi group ồn ào về một lệnh đang tăng nóng',
+      'Khi thua lỗ, câu hỏi đầu tiên là "sai ở đâu trong hệ thống?" — không phải đổ lỗi thị trường',
+      'Bạn có thể chạy cùng một chiến lược 6 tháng mà không chán, trong khi người khác đổi phương pháp mỗi tuần',
+      'Khối lượng lệnh nhất quán — 1% rủi ro là 1%, không phải "lần này 3% vì trông chắc quá"',
+      'Bạn không cần ai xác nhận tín hiệu — đủ điều kiện là vào, thiếu là không',
+      'Kết quả tháng của bạn ổn định hơn phần lớn trader cùng mức vốn'
     ],
-    blind: `Có một thứ đang giết account ISTJ một cách thầm lặng: <strong>bạn tuân thủ rule đến mức không nhận ra khi rule đó đã lỗi thời.</strong><br><br>
-Thị trường tháng 3 khác tháng 9. Regime trending khác regime choppy. ISTJ thường biết điều này trong lý thuyết — nhưng vẫn chạy cùng một system, vì "chưa đủ dữ liệu để thay đổi." Kết quả: tháng sideways bạn cắm cọc drawdown đều đặn, đúng theo plan, rất kỷ luật, và rất đau.<br><br>
-Điểm mù thứ hai: <strong>bạn đúng về system nhưng sai về timing.</strong> Bạn có thể giữ một lệnh thua 3 ngày vì "SL chưa chạm" trong khi mọi price action đã nói rõ setup đã invalid. Rule cứng bảo giữ — và bạn giữ.`,
-    hook: `Câu hỏi thật sự không phải "system của bạn có đúng không?" — mà là <strong>"bạn có biết khi nào nên tắt system của mình không?"</strong> Đây là thứ không có trong bất kỳ rule book nào, và cũng là thứ phân biệt mechanical trader với master trader. ISTJ có đủ kỷ luật để implement regime filter — nhưng hầu hết không biết bắt đầu từ đâu.`,
-    cta_q: 'Bạn đang dùng regime filter nào cho system hiện tại?'
+    blind: `Có một thứ đang giết tài khoản ISTJ một cách thầm lặng: <strong>bạn tuân thủ quy tắc đến mức không nhận ra khi quy tắc đó đã lỗi thời.</strong><br><br>
+Thị trường tháng 3 khác tháng 9. Giai đoạn có xu hướng rõ khác giai đoạn đi ngang. ISTJ thường biết điều này trong lý thuyết — nhưng vẫn chạy cùng một hệ thống, vì "chưa đủ dữ liệu để thay đổi." Kết quả: những tháng thị trường đi ngang, bạn thua lỗ đều đặn, đúng theo kế hoạch, rất kỷ luật, và rất đau.<br><br>
+Điểm mù thứ hai: <strong>bạn đúng về hệ thống nhưng sai về thời điểm.</strong> Bạn có thể giữ một lệnh thua 3 ngày vì "chưa chạm điểm cắt lỗ" trong khi mọi diễn biến giá đã nói rõ tín hiệu không còn hợp lệ. Quy tắc cứng bảo giữ — và bạn giữ.`,
+    hook: `Câu hỏi thật sự không phải "hệ thống của bạn có đúng không?" — mà là <strong>"bạn có biết khi nào nên tắt hệ thống của mình không?"</strong> Đây là thứ không có trong bất kỳ quy tắc nào, và cũng là thứ phân biệt người giao dịch cơ học với trader bậc thầy. ISTJ có đủ kỷ luật để áp dụng bộ lọc theo pha thị trường — nhưng hầu hết không biết bắt đầu từ đâu.`,
+    cta_q: 'Bạn đang dùng bộ lọc nào để nhận biết pha thị trường cho hệ thống hiện tại?'
   },
 
   INTJ: {
     name: 'Kiến Trúc Sư',
-    style: 'Systematic Algo Trader',
-    identity: `Bạn có thứ mà 95% trader không có: một <em>thesis</em> — lý do rõ ràng tại sao vào lệnh này, dựa trên đâu, và kịch bản nào sẽ prove bạn sai. Bạn không trade theo cảm xúc. Bạn trade theo logic. Và khi logic đó đúng, bạn đúng rất đẹp.`,
+    style: 'Giao dịch có hệ thống',
+    identity: `Bạn có thứ mà 95% trader không có: một <em>luận điểm</em> — lý do rõ ràng tại sao vào lệnh này, dựa trên đâu, và kịch bản nào sẽ chứng minh bạn sai. Bạn không giao dịch theo cảm xúc. Bạn giao dịch theo logic. Và khi logic đó đúng, bạn đúng rất đẹp.`,
     strengths: [
-      'Bạn có thể giải thích tại sao vào lệnh bằng ít nhất 3 lý do kỹ thuật hoặc macro',
-      'Volume Profile, order flow, macro cycle — không phải khái niệm lạ với bạn',
-      'Bạn không bị ảnh hưởng bởi noise — chart đỏ rực bạn vẫn giữ lệnh nếu thesis chưa bị invalidate',
-      'Bạn tự xây được hệ thống riêng, không cần copy của ai',
-      'Khi thị trường đi đúng thesis, bạn ride được sóng dài hơn người khác',
-      'Bạn có khả năng nhìn thấy cơ hội mà đám đông chưa thấy — và đủ kiên nhẫn để chờ',
+      'Bạn có thể giải thích tại sao vào lệnh bằng ít nhất 3 lý do kỹ thuật hoặc vĩ mô',
+      'Phân tích khối lượng, dòng tiền, chu kỳ kinh tế — không phải khái niệm xa lạ với bạn',
+      'Bạn không bị ảnh hưởng bởi nhiễu loạn — biểu đồ đỏ rực bạn vẫn giữ lệnh nếu luận điểm chưa bị bác bỏ',
+      'Bạn tự xây được hệ thống riêng, không cần sao chép của ai',
+      'Khi thị trường đi đúng luận điểm, bạn giữ lệnh được lâu hơn người khác',
+      'Bạn nhìn thấy cơ hội mà đám đông chưa thấy — và đủ kiên nhẫn để chờ',
       'Bạn học nhanh từ sai lầm vì bạn phân tích nó như bài toán, không phải cảm xúc',
-      'Confidence đến từ research — không phải may mắn. Điều đó bền hơn'
+      'Sự tự tin đến từ nghiên cứu — không phải may mắn. Điều đó bền hơn'
     ],
-    blind: `Đây là pattern gần như mọi INTJ trader đều trải qua ít nhất một lần: <strong>thesis đúng, nhưng account về mo.</strong><br><br>
-Cơ chế: bạn phân tích đúng hướng, giá đi theo thesis — nhưng bạn không chốt vì "target chưa đến." Rồi thị trường giật ngược. Rồi bạn <em>nhồi thêm</em> vì "thesis vẫn còn nguyên." Rồi drawdown chạm mức không thể chịu, bạn cắt — đúng lúc giá chuẩn bị đi tiếp.<br><br>
-Vấn đề không phải phân tích sai. Vấn đề là <strong>bạn đã gắn ego vào thesis đó.</strong> Cắt lệnh = thừa nhận thesis sai = INTJ không chấp nhận được. INTJ biết mình đang làm vậy, biết nó sai — nhưng vẫn tiếp tục vì "lần này khác."`,
-    hook: `Có một kỹ thuật gọi là <strong>"thesis invalidation trigger"</strong> — không phải SL thông thường, mà là định nghĩa trước điều kiện nào chứng minh bạn sai <em>trước khi</em> vào lệnh. INTJ là type duy nhất đủ kỷ luật để thực sự implement được cái này. Nhưng hầu hết INTJ không biết cách set nó đúng — và cứ nhầm nó với SL thông thường.`,
-    cta_q: 'Thesis invalidation trigger của bạn trông như thế nào?'
+    blind: `Đây là kịch bản gần như mọi INTJ trader đều trải qua ít nhất một lần: <strong>luận điểm đúng, nhưng tài khoản về mo.</strong><br><br>
+Cơ chế: bạn phân tích đúng hướng, giá đi theo — nhưng bạn không chốt vì "mục tiêu chưa đến." Rồi thị trường giật ngược. Rồi bạn <em>nhồi thêm lệnh</em> vì "luận điểm vẫn còn nguyên." Rồi mức thua lỗ chạm đến điểm không thể chịu đựng, bạn cắt — đúng lúc giá chuẩn bị đi tiếp.<br><br>
+Vấn đề không phải phân tích sai. Vấn đề là <strong>bạn đã gắn cái tôi vào luận điểm đó.</strong> Cắt lệnh = thừa nhận luận điểm sai = INTJ không chấp nhận được. INTJ biết mình đang làm vậy, biết nó sai — nhưng vẫn tiếp tục vì "lần này khác."`,
+    hook: `Có một kỹ thuật gọi là <strong>"điều kiện vô hiệu hóa luận điểm"</strong> — không phải điểm cắt lỗ thông thường, mà là định nghĩa trước điều kiện nào chứng minh bạn sai <em>trước khi</em> vào lệnh. INTJ là nhóm duy nhất đủ kỷ luật để thực sự áp dụng được cái này. Nhưng hầu hết INTJ không biết cách thiết lập đúng — và cứ nhầm nó với điểm cắt lỗ thông thường.`,
+    cta_q: 'Điều kiện nào sẽ khiến bạn thừa nhận luận điểm của mình sai — và bạn đặt điều đó ra trước hay sau khi vào lệnh?'
   },
 
   INTP: {
     name: 'Nhà Tư Duy',
-    style: 'Quant Researcher',
-    identity: `Bạn là người dành nhiều giờ nhất để <em>hiểu</em> thị trường — không phải để kiếm tiền ngay, mà vì bạn thực sự muốn biết nó hoạt động như thế nào. Backtest của bạn chi tiết hơn 90% trader. Model của bạn có logic. Và đó vừa là điểm mạnh lớn nhất, vừa là bẫy nguy hiểm nhất.`,
+    style: 'Nghiên cứu định lượng',
+    identity: `Bạn là người dành nhiều giờ nhất để <em>hiểu</em> thị trường — không phải để kiếm tiền ngay, mà vì bạn thực sự muốn biết nó hoạt động như thế nào. Hồ sơ kiểm tra của bạn chi tiết hơn 90% trader. Mô hình của bạn có logic. Và đó vừa là điểm mạnh lớn nhất, vừa là cái bẫy nguy hiểm nhất.`,
     strengths: [
-      'Bạn không bao giờ vào lệnh mà không hiểu tại sao — đây là thứ hiếm trong trading',
-      'Khả năng phát hiện lỗi logic trong system của người khác rất tốt',
-      'Backtest của bạn có độ chính xác cao hơn phần lớn trader retail',
-      'Bạn không bị cuốn theo hype — cần data để tin, không phải lời hứa',
-      'Có khả năng xây indicator hoặc strategy hoàn toàn từ đầu',
-      'Khi tìm ra edge thật sự, bạn có thể khai thác nó triệt để hơn ai hết',
+      'Bạn không bao giờ vào lệnh mà không hiểu tại sao — đây là thứ hiếm trong giao dịch',
+      'Khả năng phát hiện lỗi logic trong hệ thống của người khác rất tốt',
+      'Hồ sơ kiểm tra của bạn có độ chính xác cao hơn phần lớn trader nhỏ lẻ',
+      'Bạn không bị cuốn theo cơn sốt — cần số liệu để tin, không phải lời hứa',
+      'Có khả năng xây chỉ báo hoặc chiến lược hoàn toàn từ đầu',
+      'Khi tìm ra lợi thế thật sự, bạn khai thác nó triệt để hơn ai hết',
       'Không bị ảnh hưởng bởi ý kiến đám đông — bạn tin vào số liệu của mình',
-      'Giỏi nhận ra khi thị trường đã thay đổi và system cũ không còn work'
+      'Giỏi nhận ra khi thị trường đã thay đổi và hệ thống cũ không còn hoạt động'
     ],
-    blind: `INTP có một vòng lặp chết người: <strong>research → thấy chưa đủ → research thêm → thấy vẫn chưa đủ → không bao giờ live.</strong><br><br>
-Bạn có thể có một system đã backtest 3 năm dữ liệu, profit factor 1.8, max drawdown chấp nhận được — nhưng vẫn chưa live vì "cần test thêm out-of-sample." Rồi market regime thay đổi, data cũ không còn relevant, bạn bắt đầu lại từ đầu.<br><br>
-Điểm mù thứ hai: <strong>bạn tối ưu hóa thứ có thể đo được, và bỏ qua thứ không đo được.</strong> Execution psychology, position sizing dưới áp lực thật, cảm giác khi lệnh đang -5% — những thứ này không xuất hiện trong backtest, và INTP thường bị sốc khi live lần đầu.`,
-    hook: `Câu hỏi không phải "system của bạn có đủ tốt chưa?" — hầu hết INTP đã có system đủ tốt từ lâu. Câu hỏi thật là <strong>"điều gì đang thực sự ngăn bạn live?"</strong> Và câu trả lời thường không liên quan đến system.`,
-    cta_q: 'System của bạn đã backtest xong chưa — hay vẫn đang trong vòng lặp đó?'
+    blind: `INTP có một vòng lặp chết người: <strong>nghiên cứu → thấy chưa đủ → nghiên cứu thêm → thấy vẫn chưa đủ → không bao giờ vào lệnh thật.</strong><br><br>
+Bạn có thể có một hệ thống đã kiểm tra 3 năm dữ liệu, tỉ lệ kỳ vọng dương, mức thua tối đa chấp nhận được — nhưng vẫn chưa giao dịch thật vì "cần kiểm tra thêm với dữ liệu ngoài mẫu." Rồi điều kiện thị trường thay đổi, dữ liệu cũ không còn phù hợp, bạn bắt đầu lại từ đầu.<br><br>
+Điểm mù thứ hai: <strong>bạn tối ưu hóa thứ có thể đo được, và bỏ qua thứ không đo được.</strong> Tâm lý khi thực thi lệnh, quản lý khối lượng dưới áp lực thật, cảm giác khi lệnh đang âm 5% — những thứ này không xuất hiện trong kiểm tra lịch sử, và INTP thường bị sốc khi giao dịch thật lần đầu.`,
+    hook: `Câu hỏi không phải "hệ thống của bạn có đủ tốt chưa?" — hầu hết INTP đã có hệ thống đủ tốt từ lâu. Câu hỏi thật là <strong>"điều gì đang thực sự ngăn bạn giao dịch thật?"</strong> Và câu trả lời thường không liên quan đến hệ thống.`,
+    cta_q: 'Hệ thống của bạn đã kiểm tra xong chưa — hay vẫn đang trong vòng lặp đó?'
   },
 
   ENTJ: {
     name: 'Tướng Lĩnh',
-    style: 'Fund Manager / Prop Trader',
-    identity: `Bạn không chỉ trade — bạn <em>quản lý</em> trade. Bạn nghĩ theo portfolio, theo risk allocation, theo kỳ vọng tháng. Trong khi người khác lo từng lệnh, bạn lo cả hệ thống. Đây là tư duy của fund manager, không phải retail trader bình thường.`,
+    style: 'Quản lý vốn chuyên nghiệp',
+    identity: `Bạn không chỉ giao dịch — bạn <em>quản lý</em> giao dịch. Bạn nghĩ theo danh mục, theo phân bổ rủi ro, theo kỳ vọng tháng. Trong khi người khác lo từng lệnh, bạn lo cả hệ thống. Đây là tư duy của người quản lý quỹ, không phải trader nhỏ lẻ bình thường.`,
     strengths: [
-      'Bạn ra quyết định nhanh và không do dự — entry/exit không mất thời gian phân vân',
-      'Tư duy portfolio: bạn biết diversify risk thay vì all-in một trade',
-      'Mục tiêu tháng rõ ràng — bạn biết mình cần bao nhiêu % và dừng khi đạt',
-      'Khả năng quản lý nhiều position đồng thời mà không bị overwhelm',
-      'Bạn học từ thua lỗ rất nhanh — phân tích xong, adjust, tiếp tục',
-      'Không bị ảnh hưởng bởi ý kiến người khác khi đã có thesis rõ ràng',
-      'Nếu có vốn lớn, bạn scale tốt hơn hầu hết type khác',
-      'Tư duy dài hạn — không bị kẹt trong noise ngày'
+      'Bạn ra quyết định nhanh và không do dự — vào và thoát lệnh không mất thời gian phân vân',
+      'Tư duy danh mục: bạn biết phân tán rủi ro thay vì dồn hết vào một lệnh',
+      'Mục tiêu tháng rõ ràng — bạn biết mình cần bao nhiêu phần trăm và dừng khi đạt',
+      'Khả năng quản lý nhiều vị thế cùng lúc mà không bị rối',
+      'Bạn học từ thua lỗ rất nhanh — phân tích xong, điều chỉnh, tiếp tục',
+      'Không bị ảnh hưởng bởi ý kiến người khác khi đã có luận điểm rõ ràng',
+      'Nếu có vốn lớn, bạn mở rộng quy mô tốt hơn hầu hết các nhóm khác',
+      'Tư duy dài hạn — không bị kẹt trong nhiễu loạn ngắn ngày'
     ],
-    blind: `ENTJ có một lỗ hổng rất cụ thể: <strong>sizing tăng theo confidence, không theo system.</strong><br><br>
-Khi bạn "chắc" về một trade, size tự nhiên lớn hơn. Đây không phải conscious decision — nó xảy ra tự động. Và vì ENTJ thường đúng nhiều hơn sai, pattern này được reinforce liên tục cho đến khi gặp một lần sai lớn với size khổng lồ.<br><br>
-Điểm mù thứ hai: <strong>ENTJ rất khó thừa nhận sai khi đang có người xem.</strong> Nếu bạn đã nói với ai đó về trade này — chia sẻ trong group, post phân tích — việc cut loss trở nên khó gấp đôi vì nó không chỉ là thua lệnh, mà là thua mặt.`,
-    hook: `ENTJ là type có tiềm năng quản lý vốn lớn nhất — nhưng cũng là type dễ blow up nhất khi gặp black swan với position quá lớn. Ranh giới giữa hai kịch bản đó <strong>mỏng hơn bạn nghĩ.</strong>`,
-    cta_q: 'Position sizing của bạn có bị ảnh hưởng bởi mức độ "chắc chắn" không?'
+    blind: `ENTJ có một lỗ hổng rất cụ thể: <strong>khối lượng lệnh tăng theo mức độ tự tin, không theo hệ thống.</strong><br><br>
+Khi bạn "chắc" về một lệnh, khối lượng tự nhiên lớn hơn. Đây không phải quyết định có ý thức — nó xảy ra tự động. Và vì ENTJ thường đúng nhiều hơn sai, thói quen này được củng cố liên tục cho đến khi gặp một lần sai lớn với vị thế quá lớn.<br><br>
+Điểm mù thứ hai: <strong>ENTJ rất khó thừa nhận sai khi đang có người xem.</strong> Nếu bạn đã chia sẻ về lệnh này với ai đó — đăng phân tích lên nhóm, nói với bạn bè — việc cắt lỗ trở nên khó gấp đôi vì nó không chỉ là thua lệnh, mà là mất mặt.`,
+    hook: `ENTJ là nhóm có tiềm năng quản lý vốn lớn nhất — nhưng cũng là nhóm dễ cháy tài khoản nhất khi gặp cú sốc thị trường với vị thế quá lớn. Ranh giới giữa hai kịch bản đó <strong>mỏng hơn bạn nghĩ.</strong>`,
+    cta_q: 'Khối lượng lệnh của bạn có bị ảnh hưởng bởi mức độ "chắc chắn" về lệnh đó không?'
   },
 
   ENTP: {
     name: 'Nhà Tranh Luận',
-    style: 'Momentum Trader',
-    identity: `Bạn là người trong group hay đặt câu hỏi ngược: <em>"Nhưng nếu thị trường làm điều này thì sao?"</em> — và thường bạn đúng. Bạn thấy được nhiều kịch bản cùng lúc, trong khi người khác chỉ thấy một hướng. Đây là thứ làm ENTP trở thành market analyst xuất sắc.`,
+    style: 'Giao dịch theo đà',
+    identity: `Bạn là người trong nhóm hay đặt câu hỏi ngược: <em>"Nhưng nếu thị trường làm điều này thì sao?"</em> — và thường bạn đúng. Bạn thấy được nhiều kịch bản cùng lúc, trong khi người khác chỉ thấy một hướng. Đây là thứ làm ENTP trở thành nhà phân tích thị trường xuất sắc.`,
     strengths: [
-      'Không bị lock vào một bias — có thể long sáng, short chiều nếu market structure thay đổi',
-      'Đọc narrative thị trường tốt — biết câu chuyện đằng sau price action',
-      'Học concept mới cực nhanh — SMC, ICT, Wyckoff pick up trong tuần, người khác mất tháng',
-      'Không sợ đi ngược đám đông nếu logic đủ mạnh',
-      'Creative trong việc tìm setup — thấy cơ hội mà rule-based trader bỏ qua',
-      'Thích nghi nhanh khi thị trường đổi regime',
-      'Khi focused, phân tích có chất lượng top 10%',
-      'Giải thích market cho người khác rõ ràng và thú vị hơn hầu hết trader'
+      'Không bị cố định vào một chiều — có thể mua buổi sáng, bán buổi chiều nếu cấu trúc thị trường thay đổi',
+      'Đọc câu chuyện thị trường tốt — hiểu được điều đằng sau diễn biến giá',
+      'Học khái niệm mới cực nhanh — phương pháp phức tạp nhất bạn nắm trong tuần, người khác mất tháng',
+      'Không ngại đi ngược đám đông nếu logic đủ mạnh',
+      'Sáng tạo trong việc tìm tín hiệu — thấy cơ hội mà người giao dịch theo quy tắc bỏ qua',
+      'Thích nghi nhanh khi thị trường chuyển pha',
+      'Khi tập trung, chất lượng phân tích thuộc top 10%',
+      'Giải thích thị trường cho người khác rõ ràng và thú vị hơn hầu hết trader'
     ],
-    blind: `Vấn đề của ENTP không phải thiếu kiến thức — mà là <strong>quá nhiều kiến thức, quá ít execution nhất quán.</strong><br><br>
-Bạn có thể giải thích SMC cho người khác hiểu, nhưng account không phản ánh điều đó. Tại sao? Vì ENTP thường có 3–4 system đang chạy song song, không cái nào được test đủ lâu. Khi một cái thua 3 lệnh liên tiếp, bạn đã nghĩ đến cái mới.<br><br>
-Pattern nguy hiểm nhất: <strong>ENTP bored của winning system.</strong> Khi một system đang work, nó trở nên "nhàm chán." Rồi bạn tweak nó, thêm filter, thêm điều kiện — cho đến khi nó không còn work nữa. Vòng lặp này có thể kéo dài nhiều năm mà không nhận ra.`,
-    hook: `ENTP cần thứ mà hầu hết trader không nghĩ đến: <strong>boredom protocol</strong> — quy trình bắt buộc khi bạn cảm thấy system hiện tại "chán." Không phải discipline thông thường. ENTP biết discipline là gì — vấn đề là không muốn apply nó vào thứ đã quen.`,
-    cta_q: 'Bạn đang chạy mấy system song song? Cái nào lâu nhất bạn stick được?'
+    blind: `Vấn đề của ENTP không phải thiếu kiến thức — mà là <strong>quá nhiều kiến thức, quá ít thực thi nhất quán.</strong><br><br>
+Bạn có thể giải thích các phương pháp phức tạp cho người khác hiểu, nhưng tài khoản không phản ánh điều đó. Tại sao? Vì ENTP thường có 3–4 hệ thống đang chạy song song, không cái nào được kiểm tra đủ lâu. Khi một cái thua 3 lệnh liên tiếp, bạn đã nghĩ đến cái mới.<br><br>
+Nguy hiểm nhất: <strong>ENTP chán hệ thống đang thắng.</strong> Khi một hệ thống đang hoạt động tốt, nó trở nên "nhàm chán." Rồi bạn chỉnh sửa nó, thêm điều kiện, thêm bộ lọc — cho đến khi nó không còn hoạt động nữa. Vòng lặp này có thể kéo dài nhiều năm mà không nhận ra.`,
+    hook: `ENTP cần thứ mà hầu hết trader không nghĩ đến: <strong>quy trình đối phó với cảm giác chán</strong> — một bộ câu hỏi bắt buộc phải trả lời khi bạn muốn chỉnh sửa hệ thống đang hoạt động. Không phải kỷ luật thông thường. ENTP biết kỷ luật là gì — vấn đề là không muốn áp dụng nó vào thứ đã quen.`,
+    cta_q: 'Bạn đang chạy mấy hệ thống song song? Cái nào bạn duy trì được lâu nhất?'
   },
 
   INFJ: {
     name: 'Người Tiên Tri',
-    style: 'Macro Intuition Trader',
-    identity: `Bạn có khả năng cảm nhận thị trường trước khi chart xác nhận — và đôi khi điều đó đúng đến mức đáng sợ. Bạn không chỉ đọc chart, bạn đọc <em>câu chuyện</em> phía sau chart. Đây là thứ không thể dạy được, và INFJ là một trong số ít type thực sự có nó.`,
+    style: 'Giao dịch theo trực giác vĩ mô',
+    identity: `Bạn có khả năng cảm nhận thị trường trước khi biểu đồ xác nhận — và đôi khi điều đó đúng đến mức đáng sợ. Bạn không chỉ đọc biểu đồ, bạn đọc <em>câu chuyện</em> phía sau biểu đồ. Đây là thứ không thể dạy được, và INFJ là một trong số ít nhóm thực sự có nó.`,
     strengths: [
-      'Trực giác thị trường tốt — thường cảm nhận đúng vibe trước khi có confirmation',
-      'Nhìn được big picture mà scalper bỏ qua — macro context luôn trong đầu',
-      'Kiên nhẫn chờ setup thật sự, không bị noise ngắn hạn làm phân tâm',
-      'Phân tích sâu về sentiment và tâm lý thị trường',
-      'Không bị cuốn theo đám đông khi đã có conviction riêng',
+      'Trực giác thị trường tốt — thường cảm nhận đúng xu hướng trước khi có xác nhận',
+      'Nhìn được bức tranh lớn mà người giao dịch ngắn hạn bỏ qua — bối cảnh vĩ mô luôn trong đầu',
+      'Kiên nhẫn chờ tín hiệu thật sự, không bị nhiễu ngắn hạn làm phân tâm',
+      'Phân tích sâu về tâm lý đám đông và xu hướng thị trường',
+      'Không bị cuốn theo đám đông khi đã có quan điểm riêng',
       'Khi đúng, thường đúng rất sớm — vào được ở vùng giá tốt nhất',
-      'Học từ pattern lớn tốt hơn từ rule nhỏ — phù hợp với swing/macro trading',
-      'Tư duy dài hạn giúp tránh được nhiều false move ngắn hạn'
+      'Học từ các mẫu lớn tốt hơn từ quy tắc nhỏ — phù hợp với giao dịch dài hạn',
+      'Tư duy dài hạn giúp tránh được nhiều tín hiệu giả ngắn hạn'
     ],
-    blind: `INFJ có một paradox: <strong>trực giác tốt nhưng execution tệ.</strong><br><br>
-Bạn cảm thấy thị trường sẽ đi đâu — nhưng do dự vào lệnh vì "chưa đủ confirmation." Rồi khi chart xác nhận, entry đã không còn đẹp. Rồi bạn vào muộn với RR xấu hơn. Đây là frustration đặc trưng của INFJ trader.<br><br>
-Điểm mù nguy hiểm hơn: <strong>khi lệnh đi ngược, INFJ không cut loss — họ "cảm thấy" thị trường sẽ quay lại.</strong> Và đôi khi đúng thật. Điều đó làm pattern này càng khó phá vỡ, vì brain liên tục được reinforce rằng "gồng là đúng."`,
-    hook: `Trực giác của bạn có thể là edge thật sự — nhưng chỉ khi nó được gắn với một <strong>pre-defined trigger để convert conviction thành action.</strong> Không có trigger đó, trực giác chỉ là noise đắt tiền.`,
-    cta_q: 'Bạn đã bao giờ thấy đúng nhưng không vào được lệnh, rồi nhìn thị trường đi theo đúng hướng đó chưa?'
+    blind: `INFJ có một nghịch lý: <strong>trực giác tốt nhưng thực thi tệ.</strong><br><br>
+Bạn cảm thấy thị trường sẽ đi đâu — nhưng do dự vào lệnh vì "chưa đủ xác nhận." Rồi khi biểu đồ xác nhận, điểm vào đã không còn đẹp. Rồi bạn vào muộn với tỉ lệ lời/lỗ xấu hơn. Đây là sự thất vọng đặc trưng của INFJ trader.<br><br>
+Điểm mù nguy hiểm hơn: <strong>khi lệnh đi ngược, INFJ không cắt lỗ — họ "cảm thấy" thị trường sẽ quay lại.</strong> Và đôi khi đúng thật. Điều đó làm thói quen gồng lỗ càng khó phá vỡ, vì não liên tục được củng cố rằng "chờ là đúng."`,
+    hook: `Trực giác của bạn có thể là lợi thế thật sự — nhưng chỉ khi nó được gắn với một <strong>điều kiện kích hoạt rõ ràng để chuyển niềm tin thành hành động.</strong> Không có điều kiện đó, trực giác chỉ là tiếng ồn đắt tiền.`,
+    cta_q: 'Bạn đã bao giờ thấy đúng nhưng không vào được lệnh, rồi nhìn thị trường đi đúng hướng đó chưa?'
   },
 
   INFP: {
     name: 'Người Hòa Giải',
-    style: 'Narrative Swing Trader',
-    identity: `Bạn trade không chỉ bằng chart — bạn trade bằng <em>câu chuyện.</em> Khi bạn hiểu tại sao một asset đáng tăng, bạn có thể hold qua noise tốt hơn hầu hết người. Đây là thứ quý giá trong swing trading dài hạn mà mechanical trader không bao giờ có được.`,
+    style: 'Giao dịch theo câu chuyện',
+    identity: `Bạn giao dịch không chỉ bằng biểu đồ — bạn giao dịch bằng <em>câu chuyện.</em> Khi bạn hiểu tại sao một tài sản đáng tăng, bạn có thể giữ lệnh qua nhiễu loạn tốt hơn hầu hết người. Đây là thứ quý giá trong giao dịch trung và dài hạn mà người giao dịch cơ học không bao giờ có được.`,
     strengths: [
-      'Kiên nhẫn chờ setup chín muồi — không bị FOMO dễ dàng',
-      'Hiểu narrative thị trường sâu — biết tại sao asset này đáng trade, không chỉ khi nào',
-      'Loyalty với system khi đã tin — không bỏ giữa chừng vì vài lệnh thua',
-      'Nhạy cảm với shift trong sentiment trước khi chart phản ánh',
-      'Phân tích macro và câu chuyện dài hạn tốt hơn hầu hết type',
-      'Không bị áp lực của người khác làm thay đổi quyết định khi đã tin',
-      'Học được nhiều từ lịch sử thị trường — pattern lặp lại trong nhiều năm',
-      'Tỉ lệ gắn bó với một asset đủ lâu để capture big move'
+      'Kiên nhẫn chờ tín hiệu chín muồi — không bị FOMO dễ dàng',
+      'Hiểu câu chuyện thị trường sâu — biết tại sao tài sản này đáng giao dịch, không chỉ khi nào',
+      'Trung thành với hệ thống khi đã tin — không bỏ giữa chừng vì vài lệnh thua',
+      'Nhạy cảm với sự thay đổi tâm lý thị trường trước khi biểu đồ phản ánh',
+      'Phân tích bức tranh dài hạn tốt hơn hầu hết các nhóm khác',
+      'Không bị áp lực người khác làm thay đổi quyết định khi đã tin tưởng',
+      'Học được nhiều từ lịch sử thị trường — các mẫu lặp lại qua nhiều năm',
+      'Tỉ lệ bám theo một tài sản đủ lâu để nắm bắt được cú tăng lớn'
     ],
     blind: `INFP có điểm mù rất cụ thể: <strong>gắn cảm xúc vào lệnh như gắn cảm xúc vào con người.</strong><br><br>
-Khi một lệnh đang thua, INFP không cut loss — họ "tin tưởng vào nó." Câu chuyện vẫn còn đó, fundamentals vẫn đúng, nên tại sao phải cắt? Và đôi khi lệnh đó recover thật. Điều đó làm pattern gồng lỗ được reinforce liên tục.<br><br>
-Điểm mù thứ hai: <strong>INFP rất khó trade ngược xu hướng cảm xúc của mình.</strong> Nếu bạn "thích" một asset, bạn sẽ tìm lý do để long dù setup không đẹp. Confirmation bias này hoạt động rất tinh vi — bạn tin rằng mình đang phân tích, nhưng thực ra đang tìm cớ để làm điều mình đã muốn.`,
-    hook: `INFP cần thứ nghe có vẻ đơn giản nhưng rất khó làm: <strong>tách biệt "tôi thích asset này" khỏi "đây là setup đáng trade."</strong> Hai câu đó không giống nhau — và khoảng cách giữa chúng chính là nơi tiền biến mất.`,
-    cta_q: 'Bạn có đang giữ lệnh nào mà nếu thành thật thì setup đã không còn valid không?'
+Khi một lệnh đang thua, INFP không cắt lỗ — họ "tin tưởng vào nó." Câu chuyện vẫn còn đó, nền tảng vẫn đúng, nên tại sao phải cắt? Và đôi khi lệnh đó hồi phục thật. Điều đó làm thói quen gồng lỗ được củng cố liên tục.<br><br>
+Điểm mù thứ hai: <strong>INFP rất khó giao dịch ngược lại cảm xúc của mình về một tài sản.</strong> Nếu bạn "thích" một cổ phiếu hoặc đồng tiền nào đó, bạn sẽ tìm lý do để mua dù tín hiệu không đẹp. Thiên kiến xác nhận này hoạt động rất tinh vi — bạn tin rằng mình đang phân tích, nhưng thực ra đang tìm cớ để làm điều mình đã muốn.`,
+    hook: `INFP cần thứ nghe có vẻ đơn giản nhưng rất khó làm: <strong>tách biệt "tôi thích tài sản này" khỏi "đây là tín hiệu đáng giao dịch."</strong> Hai câu đó không giống nhau — và khoảng cách giữa chúng chính là nơi tiền biến mất.`,
+    cta_q: 'Bạn có đang giữ lệnh nào mà nếu thành thật thì tín hiệu đã không còn hợp lệ không?'
   },
 
   ENFJ: {
     name: 'Người Dẫn Dắt',
-    style: 'Sentiment & Signal Trader',
-    identity: `Bạn đọc được tâm lý đám đông cực tốt — cảm nhận khi nào market đang fear, khi nào greed, trước khi VIX hay Fear & Greed Index xác nhận. Đây là skill thật sự. Vấn đề là bạn đang dùng nó để follow đám đông thay vì trade ngược lại.`,
+    style: 'Giao dịch theo tâm lý đám đông',
+    identity: `Bạn đọc được tâm lý đám đông cực tốt — cảm nhận khi nào thị trường đang sợ hãi, khi nào tham lam, trước khi các chỉ số cảm xúc thị trường xác nhận. Đây là kỹ năng thật sự. Vấn đề là bạn đang dùng nó để đi theo đám đông thay vì giao dịch ngược lại.`,
     strengths: [
-      'Đọc sentiment thị trường tốt — cảm nhận được mood trước khi chart phản ánh',
+      'Đọc tâm lý thị trường tốt — cảm nhận được trạng thái trước khi biểu đồ phản ánh',
       'Nhạy cảm với tin tức và phản ứng của thị trường với tin tức',
-      'Xây được network trader tốt — thông tin chất lượng đến nhanh hơn',
-      'Khi có system riêng, khả năng đọc context giúp filter setup rất tốt',
-      'Nhận ra sớm khi một narrative đang thay đổi trong cộng đồng',
-      'Giao tiếp tốt — học hỏi từ trader khác hiệu quả hơn hầu hết type',
+      'Xây được mạng lưới trader tốt — thông tin chất lượng đến nhanh hơn',
+      'Khi có hệ thống riêng, khả năng đọc bối cảnh giúp lọc tín hiệu rất tốt',
+      'Nhận ra sớm khi một câu chuyện đang thay đổi trong cộng đồng',
+      'Giao tiếp tốt — học hỏi từ trader khác hiệu quả hơn hầu hết các nhóm',
       'Không cố chấp — sẵn sàng thay đổi quan điểm khi có thông tin mới',
-      'Nếu làm signal provider, khả năng giải thích trade rõ ràng và thuyết phục'
+      'Nếu làm người cung cấp tín hiệu, khả năng giải thích giao dịch rõ ràng và thuyết phục'
     ],
-    blind: `Điểm mù lớn nhất của ENFJ trader: <strong>không có hệ thống riêng — đang trade bằng consensus của người khác.</strong><br><br>
-Bạn giỏi đọc sentiment, nhưng thay vì dùng nó như một indicator, bạn đang dùng nó như source of truth. Khi group bullish, bạn long. Khi group panic, bạn sell. Và vì đám đông thường sai ở đỉnh và đáy — đúng lúc bạn cần tư duy độc lập nhất — bạn lại bị kéo theo nhất.<br><br>
-Thêm vào đó: <strong>ENFJ rất khó cut loss khi đã share trade với người khác.</strong> Cắt lệnh = thừa nhận sai trước mặt cộng đồng. Ego gắn với social image làm việc này khó gấp đôi.`,
-    hook: `Bạn có tất cả công cụ để là một contra-trader xuất sắc — người trade ngược lại đám đông đúng lúc. Nhưng để làm được điều đó, bạn cần <strong>tách biệt việc đọc sentiment khỏi việc bị cuốn bởi sentiment.</strong> Ranh giới đó, một khi vượt qua được, là edge cực kỳ lợi hại.`,
-    cta_q: 'Lệnh cuối bạn vào vì setup của mình hay vì thấy người khác đang vào?'
+    blind: `Điểm mù lớn nhất của ENFJ trader: <strong>không có hệ thống riêng — đang giao dịch dựa trên đồng thuận của người khác.</strong><br><br>
+Bạn giỏi đọc tâm lý đám đông, nhưng thay vì dùng nó như một chỉ báo, bạn đang dùng nó như nguồn sự thật. Khi nhóm lạc quan, bạn mua. Khi nhóm hoảng loạn, bạn bán. Và vì đám đông thường sai ở đỉnh và đáy — đúng lúc bạn cần tư duy độc lập nhất — bạn lại bị kéo theo nhất.<br><br>
+Thêm vào đó: <strong>ENFJ rất khó cắt lỗ khi đã chia sẻ lệnh đó với người khác.</strong> Cắt lỗ = thừa nhận sai trước mặt cộng đồng. Cái tôi gắn với hình ảnh xã hội làm việc này khó gấp đôi.`,
+    hook: `Bạn có tất cả công cụ để là một người giao dịch ngược chiều xuất sắc — vào lệnh ngược đám đông đúng lúc. Nhưng để làm được điều đó, bạn cần <strong>tách biệt việc đọc tâm lý đám đông khỏi việc bị cuốn bởi nó.</strong> Ranh giới đó, một khi vượt qua được, là lợi thế cực kỳ mạnh.`,
+    cta_q: 'Lệnh cuối bạn vào vì tín hiệu của mình hay vì thấy người khác đang vào?'
   },
 
   ENFP: {
     name: 'Người Truyền Cảm Hứng',
-    style: 'News & Catalyst Trader',
-    identity: `Bạn phản xạ với thị trường nhanh hơn hầu hết người — khi tin ra, bạn đã vào lệnh trước khi người khác còn đọc xong headline. Bạn thấy cơ hội ở khắp nơi, và đôi khi những cơ hội đó thật sự tốt. Đây là gift — khi được kiểm soát.`,
+    style: 'Giao dịch theo tin tức',
+    identity: `Bạn phản xạ với thị trường nhanh hơn hầu hết người — khi tin ra, bạn đã vào lệnh trước khi người khác còn đọc xong tiêu đề. Bạn thấy cơ hội ở khắp nơi, và đôi khi những cơ hội đó thật sự tốt. Đây là món quà — khi được kiểm soát.`,
     strengths: [
-      'Phản xạ nhanh với catalyst và tin tức — execution tốt trong môi trường volatile',
-      'Sáng tạo trong việc tìm setup mà người khác không nghĩ đến',
-      'Năng lượng cao — không bị burn out khi thị trường flat',
-      'Thích nghi nhanh khi narrative thị trường thay đổi',
-      'Tư duy liên kết — thấy mối quan hệ giữa các asset tốt',
-      'Không bị stuck vào một view — pivot nhanh khi sai',
-      'Khi vào được đúng momentum, profit factor rất cao',
-      'Giỏi tìm ra các thematic play trước khi chúng mainstream'
+      'Phản xạ nhanh với tin tức và sự kiện thúc đẩy — thực thi lệnh tốt trong môi trường biến động',
+      'Sáng tạo trong việc tìm tín hiệu mà người khác không nghĩ đến',
+      'Năng lượng cao — không bị kiệt sức khi thị trường đi ngang',
+      'Thích nghi nhanh khi câu chuyện thị trường thay đổi',
+      'Tư duy liên kết — thấy mối quan hệ giữa các loại tài sản tốt',
+      'Không bị cố định vào một quan điểm — chuyển hướng nhanh khi sai',
+      'Khi vào được đúng đà tăng, hiệu quả lệnh rất cao',
+      'Giỏi tìm ra các chủ đề đầu tư trước khi chúng trở thành xu hướng chính'
     ],
-    blind: `ENFP có con số không ai muốn nhìn: <strong>tổng số lệnh trong tháng cao gấp 3 lần cần thiết, nhưng net profit chỉ bằng 30% nếu chỉ giữ lại những setup tốt nhất.</strong><br><br>
-Phần lớn lệnh của bạn không có edge rõ ràng — chúng được vào vì "cảm giác có gì đó đang xảy ra." Và phí giao dịch, spread, slippage cộng lại ăn hết phần lớn winning trade.<br><br>
-Điểm mù nguy hiểm hơn: <strong>ENFP rất giỏi tạo ra lý do hợp lý cho những gì mình muốn làm.</strong> Bạn có thể rationalize bất kỳ lệnh nào trong 30 giây. Điều đó làm rất khó để bạn tự nhận ra khi nào mình đang trade theo FOMO.`,
-    hook: `ENFP không cần thêm strategy. Bạn có quá nhiều strategy rồi. Thứ bạn cần là <strong>một bộ lọc để giết 70% số lệnh bạn muốn vào — và chỉ giữ lại phần có edge thật sự.</strong> Khó nhất là bộ lọc đó phải đủ cứng để bạn không rationalize được.`,
+    blind: `ENFP có con số không ai muốn nhìn: <strong>tổng số lệnh trong tháng cao gấp 3 lần cần thiết, nhưng lợi nhuận ròng chỉ bằng 30% nếu chỉ giữ lại những tín hiệu tốt nhất.</strong><br><br>
+Phần lớn lệnh của bạn không có lợi thế rõ ràng — chúng được vào vì "cảm giác có gì đó đang xảy ra." Và phí giao dịch, chênh lệch giá, trượt giá cộng lại ăn hết phần lớn lệnh thắng.<br><br>
+Điểm mù nguy hiểm hơn: <strong>ENFP rất giỏi tạo ra lý do hợp lý cho những gì mình muốn làm.</strong> Bạn có thể biện hộ cho bất kỳ lệnh nào trong 30 giây. Điều đó làm rất khó để bạn tự nhận ra khi nào mình đang giao dịch theo FOMO.`,
+    hook: `ENFP không cần thêm chiến lược. Bạn có quá nhiều chiến lược rồi. Thứ bạn cần là <strong>một bộ lọc để loại bỏ 70% số lệnh bạn muốn vào — và chỉ giữ lại phần có lợi thế thật sự.</strong> Khó nhất là bộ lọc đó phải đủ cứng để bạn không lý giải được.`,
     cta_q: 'Nếu bạn chỉ được phép vào 3 lệnh tuần này, bạn sẽ chọn những lệnh nào?'
   },
 
   ISFJ: {
     name: 'Người Bảo Vệ',
-    style: 'Conservative Capital Preservation Trader',
-    identity: `Bạn hiểu điều mà nhiều trader mất nhiều năm mới học được: <em>bảo toàn vốn quan trọng hơn kiếm tiền.</em> Bạn không thích mạo hiểm không cần thiết — và điều đó làm bạn sống sót qua những giai đoạn mà trader khác blow up.`,
+    style: 'Giao dịch thận trọng, bảo toàn vốn',
+    identity: `Bạn hiểu điều mà nhiều trader mất nhiều năm mới học được: <em>bảo toàn vốn quan trọng hơn kiếm tiền.</em> Bạn không thích mạo hiểm không cần thiết — và điều đó làm bạn sống sót qua những giai đoạn mà trader khác cháy tài khoản.`,
     strengths: [
-      'Drawdown của bạn nhỏ và có thể quản lý được — vốn không biến mất đột ngột',
-      'Risk management tự nhiên — bạn không cần ai nhắc về position sizing',
-      'Kiên nhẫn cao — có thể chờ setup thật sự mà không bị FOMO',
-      'Nhất quán trong việc thực hiện theo plan',
-      'Không bị cuốn theo leverage cao hay margin call',
-      'Tư duy bảo toàn vốn dài hạn phù hợp với investing hơn là speculating',
-      'Ít bị ảnh hưởng bởi market manipulation và trap',
+      'Mức thua tối đa nhỏ và có thể quản lý được — vốn không biến mất đột ngột',
+      'Quản lý rủi ro tự nhiên — bạn không cần ai nhắc về khối lượng lệnh',
+      'Kiên nhẫn cao — có thể chờ tín hiệu thật sự mà không bị FOMO',
+      'Nhất quán trong việc thực hiện theo kế hoạch',
+      'Không bị cuốn theo đòn bẩy cao hay bị gọi ký quỹ',
+      'Tư duy bảo toàn vốn dài hạn phù hợp với đầu tư hơn là đầu cơ',
+      'Ít bị ảnh hưởng bởi thao túng thị trường và các bẫy giá',
       'Kết quả ổn định và dự đoán được theo thời gian'
     ],
-    blind: `ISFJ có một dạng thiệt thòi rất im lặng: <strong>loss aversion mạnh đến mức cắt lãi quá sớm và gồng lỗ quá lâu — đúng ngược chiều những gì nên làm.</strong><br><br>
-Khi lệnh lãi, bạn cảm thấy "cần chốt ngay trước khi nó mất" — và bạn chốt. Khi lệnh lỗ, bạn cảm thấy "nếu đợi thêm có thể hòa vốn" — và bạn đợi. Kết quả: winning trade bị cắt ngắn, losing trade bị kéo dài. Đây là công thức ngược của profitable trader.<br><br>
-Điểm mù thứ hai: <strong>ISFJ tránh các cơ hội có risk cao dù reward xứng đáng.</strong> Bạn có thể miss những big move vì "trông rủi ro quá" — trong khi thực ra risk/reward rất tốt.`,
-    hook: `Có một nghịch lý ISFJ cần đối mặt: <strong>để bảo toàn vốn dài hạn, đôi khi bạn phải chấp nhận risk lớn hơn trong ngắn hạn.</strong> Và để grow account, bạn phải học cách ngồi yên khi lệnh đang lãi — thứ ngược bản năng hoàn toàn với ISFJ.`,
-    cta_q: 'Lệnh lãi lớn nhất của bạn — bạn đã hold được bao lâu trước khi chốt?'
+    blind: `ISFJ có một dạng thiệt thòi rất im lặng: <strong>tâm lý sợ mất mát mạnh đến mức chốt lãi quá sớm và gồng lỗ quá lâu — đúng ngược chiều những gì nên làm.</strong><br><br>
+Khi lệnh có lãi, bạn cảm thấy "cần chốt ngay trước khi nó mất" — và bạn chốt. Khi lệnh lỗ, bạn cảm thấy "nếu đợi thêm có thể hòa vốn" — và bạn đợi. Kết quả: lệnh thắng bị cắt ngắn, lệnh thua bị kéo dài. Đây là công thức ngược của trader có lời.<br><br>
+Điểm mù thứ hai: <strong>ISFJ tránh các cơ hội có rủi ro cao dù phần thưởng xứng đáng.</strong> Bạn có thể bỏ lỡ những cú tăng lớn vì "trông nguy hiểm quá" — trong khi thực ra tỉ lệ lời/lỗ rất tốt.`,
+    hook: `Có một nghịch lý ISFJ cần đối mặt: <strong>để bảo toàn vốn dài hạn, đôi khi bạn phải chấp nhận rủi ro lớn hơn trong ngắn hạn.</strong> Và để tăng trưởng tài khoản, bạn phải học cách ngồi yên khi lệnh đang có lãi — thứ ngược bản năng hoàn toàn với ISFJ.`,
+    cta_q: 'Lệnh lãi lớn nhất của bạn — bạn đã giữ được bao lâu trước khi chốt?'
   },
 
   ESTJ: {
     name: 'Giám Đốc Điều Hành',
-    style: 'Institutional Process Trader',
-    identity: `Bạn không trade theo cảm hứng — bạn có <em>quy trình.</em> Checklist trước khi vào lệnh, review cuối tuần, target tháng rõ ràng. Đây là cách các prop desk lớn vận hành, và bạn đang áp dụng nó ở level cá nhân.`,
+    style: 'Giao dịch theo quy trình tổ chức',
+    identity: `Bạn không giao dịch theo cảm hứng — bạn có <em>quy trình.</em> Danh sách kiểm tra trước khi vào lệnh, đánh giá cuối tuần, mục tiêu tháng rõ ràng. Đây là cách các bàn giao dịch lớn vận hành, và bạn đang áp dụng nó ở cấp độ cá nhân.`,
     strengths: [
       'Quy trình rõ ràng — biết chính xác cần làm gì ở mỗi bước',
-      'Accountability cao — tự chịu trách nhiệm với kết quả, không đổ lỗi thị trường',
-      'Quản lý thời gian tốt — không bị chart hút hồn cả ngày không hiệu quả',
-      'Target tháng thực tế và có thể đạt được',
-      'Execution nhất quán — ít bị ảnh hưởng bởi mood ngày',
-      'Kỷ luật trong việc review và cải thiện',
-      'Scale tốt khi vốn tăng — process không thay đổi khi số to hơn',
-      'Phù hợp nhất với trading như một business, không phải hobby'
+      'Trách nhiệm cao — tự chịu trách nhiệm với kết quả, không đổ lỗi thị trường',
+      'Quản lý thời gian tốt — không bị biểu đồ cuốn hút cả ngày mà không hiệu quả',
+      'Mục tiêu tháng thực tế và có thể đạt được',
+      'Thực thi nhất quán — ít bị ảnh hưởng bởi tâm trạng từng ngày',
+      'Kỷ luật trong việc đánh giá và cải thiện',
+      'Mở rộng quy mô tốt khi vốn tăng — quy trình không thay đổi khi con số lớn hơn',
+      'Phù hợp nhất với giao dịch như một công việc kinh doanh, không phải sở thích'
     ],
-    blind: `ESTJ có một điểm mù rất cụ thể: <strong>confirmation bias cực mạnh khi đã có quan điểm.</strong><br><br>
-Khi bạn đã quyết định thị trường đang bullish, bạn sẽ đọc mọi tín hiệu theo hướng bullish. Chart giảm? "Pullback bình thường." Volume giảm? "Tích lũy." Đây không phải phân tích — đây là selective reading.<br><br>
-Điểm mù thứ hai: <strong>ESTJ rất khó pivot khi process đang nói một hướng nhưng thực tế nói hướng khác.</strong> "Sai process hay sai thị trường?" — ESTJ thường chọn tin vào process quá lâu trước khi thừa nhận cần điều chỉnh.`,
-    hook: `Process của bạn là điểm mạnh — nhưng process cần được update định kỳ. <strong>Một process tốt được review 3 tháng một lần khác hoàn toàn với một process được coi là "đúng vĩnh viễn."</strong> Bạn đang làm cái nào?`,
-    cta_q: 'Lần cuối cùng bạn update process trading của mình là khi nào?'
+    blind: `ESTJ có một điểm mù rất cụ thể: <strong>thiên kiến xác nhận cực mạnh khi đã có quan điểm.</strong><br><br>
+Khi bạn đã quyết định thị trường đang tăng, bạn sẽ đọc mọi tín hiệu theo hướng tăng. Biểu đồ giảm? "Điều chỉnh bình thường." Khối lượng giảm? "Đang tích lũy." Đây không phải phân tích — đây là đọc có chọn lọc.<br><br>
+Điểm mù thứ hai: <strong>ESTJ rất khó chuyển hướng khi quy trình đang nói một chiều nhưng thực tế nói chiều khác.</strong> "Sai quy trình hay sai thị trường?" — ESTJ thường chọn tin vào quy trình quá lâu trước khi thừa nhận cần điều chỉnh.`,
+    hook: `Quy trình của bạn là điểm mạnh — nhưng quy trình cần được cập nhật định kỳ. <strong>Một quy trình tốt được xem xét lại 3 tháng một lần khác hoàn toàn với một quy trình được coi là "đúng mãi mãi."</strong> Bạn đang làm cái nào?`,
+    cta_q: 'Lần cuối cùng bạn xem xét lại và cập nhật quy trình giao dịch của mình là khi nào?'
   },
 
   ESFJ: {
     name: 'Người Lãnh Sự',
-    style: 'Community-Driven Trader',
-    identity: `Bạn học trading nhanh nhất khi có cộng đồng xung quanh. Group chat, forum, livestream — bạn hấp thụ thông tin từ nhiều nguồn nhanh và tổng hợp được bức tranh sentiment tốt. Đây là skill thật — nhưng nó đang được dùng sai mục đích.`,
+    style: 'Giao dịch dựa vào cộng đồng',
+    identity: `Bạn học giao dịch nhanh nhất khi có cộng đồng xung quanh. Nhóm chat, diễn đàn, livestream — bạn hấp thụ thông tin từ nhiều nguồn nhanh và tổng hợp được bức tranh tâm lý tốt. Đây là kỹ năng thật — nhưng nó đang được dùng sai mục đích.`,
     strengths: [
-      'Network tốt — thông tin market-moving đến với bạn nhanh hơn trader solo',
-      'Đọc được sentiment của retail trader — biết đám đông đang nghĩ gì',
+      'Mạng lưới rộng — thông tin quan trọng đến với bạn nhanh hơn người giao dịch một mình',
+      'Đọc được tâm lý của trader nhỏ lẻ — biết đám đông đang nghĩ gì',
       'Học hỏi từ người khác hiệu quả — không cần tự mày mò từ đầu',
-      'Nếu có system riêng, social awareness giúp filter noise tốt',
-      'Nhạy cảm với shift trong narrative cộng đồng',
-      'Giao tiếp tốt — có thể giải thích trade rõ ràng',
-      'Không bị cô đơn trong trading — quan trọng hơn người nghĩ',
-      'Khi tham gia prop firm, làm việc nhóm tốt hơn hầu hết type'
+      'Nếu có hệ thống riêng, nhận thức xã hội giúp lọc nhiễu tốt',
+      'Nhạy cảm với sự thay đổi câu chuyện trong cộng đồng',
+      'Giao tiếp tốt — có thể giải thích giao dịch rõ ràng',
+      'Không bị cô đơn trong giao dịch — quan trọng hơn người nghĩ',
+      'Khi tham gia tổ chức giao dịch, làm việc nhóm tốt hơn hầu hết các nhóm khác'
     ],
-    blind: `Vấn đề cốt lõi của ESFJ trader: <strong>chưa có hệ thống riêng — mọi lệnh đều được trigger bởi ai đó hoặc điều gì đó bên ngoài.</strong><br><br>
-H�m nay thấy người trong group vào long vàng — bạn vào. Hôm qua influencer nói Bitcoin về 50k — bạn short. Từng lệnh đơn lẻ có thể có lý, nhưng cộng lại bạn đang trade không có edge nhất quán nào cả.<br><br>
-Điểm mù nguy hiểm: <strong>ESFJ rất khó trade ngược lại với những gì người xung quanh đang làm.</strong> Ngay cả khi biết đám đông đang sai, bạn vẫn cảm thấy "unsafe" khi đứng một mình. Đây là social wiring, không phải điểm yếu cá nhân — nhưng nó rất đắt tiền trong trading.`,
-    hook: `ESFJ cần một thứ trước tất cả: <strong>một setup template chỉ của riêng mình — không phải của ai trong group.</strong> Không phải để cô lập, mà để có anchor. Khi bạn có anchor đó, social awareness của bạn trở thành asset thay vì liability.`,
-    cta_q: 'Nếu tất cả group của bạn đều offline trong 1 tuần, bạn vẫn có thể tìm được setup không?'
+    blind: `Vấn đề cốt lõi của ESFJ trader: <strong>chưa có hệ thống riêng — mọi lệnh đều được kích hoạt bởi ai đó hoặc điều gì đó bên ngoài.</strong><br><br>
+H�m nay thấy người trong nhóm vào mua vàng — bạn vào. Hôm qua người nổi tiếng nói giá sẽ giảm mạnh — bạn bán. Từng lệnh đơn lẻ có thể có lý, nhưng cộng lại bạn đang giao dịch không có lợi thế nhất quán nào cả.<br><br>
+Điểm mù nguy hiểm: <strong>ESFJ rất khó giao dịch ngược lại với những gì người xung quanh đang làm.</strong> Ngay cả khi biết đám đông đang sai, bạn vẫn cảm thấy không an toàn khi đứng một mình. Đây là cách não bộ vận hành theo thiên hướng xã hội, không phải điểm yếu cá nhân — nhưng nó rất tốn kém trong giao dịch.`,
+    hook: `ESFJ cần một thứ trước tất cả: <strong>một mẫu tín hiệu chỉ của riêng mình — không phải của ai trong nhóm.</strong> Không phải để cô lập, mà để có điểm neo. Khi bạn có điểm neo đó, nhận thức cộng đồng của bạn trở thành lợi thế thay vì gánh nặng.`,
+    cta_q: 'Nếu tất cả nhóm của bạn đều ngoại tuyến trong 1 tuần, bạn vẫn có thể tìm được tín hiệu không?'
   },
 
   ISTP: {
     name: 'Người Thợ Lành Nghề',
-    style: 'Technical Scalper',
-    identity: `Bạn đọc chart như đọc ngôn ngữ mẹ đẻ. Candle patterns, market structure, support/resistance — bạn xử lý những thứ này theo phản xạ, không cần suy nghĩ. Execution của bạn thường là sắc nét nhất trong room.`,
+    style: 'Giao dịch kỹ thuật ngắn hạn',
+    identity: `Bạn đọc biểu đồ như đọc ngôn ngữ mẹ đẻ. Mẫu nến, cấu trúc thị trường, vùng hỗ trợ kháng cự — bạn xử lý những thứ này theo phản xạ, không cần suy nghĩ. Khả năng thực thi lệnh của bạn thường là sắc bén nhất.`,
     strengths: [
-      'Execution tốt nhất trong 16 type — entry/exit chính xác và không do dự',
-      'Bình tĩnh dưới áp lực — drawdown ngắn hạn không làm bạn sụp đổ',
-      'Đọc price action theo phản xạ — không cần indicator cũng nhìn thấy setup',
-      'Không bị phân tâm bởi noise macro khi đang scalp',
-      'Thực dụng — chỉ tin vào những gì chart đang nói, không phải những gì nên xảy ra',
-      'Giỏi xử lý nhiều thông tin cùng lúc khi thị trường volatile',
-      'Không over-complicate — giữ system đơn giản và hiệu quả',
-      'Screen time cao dẫn đến pattern recognition tốt theo thời gian'
+      'Thực thi lệnh tốt nhất trong 16 nhóm — vào và thoát lệnh chính xác và không do dự',
+      'Bình tĩnh dưới áp lực — thua lỗ ngắn hạn không làm bạn sụp đổ',
+      'Đọc diễn biến giá theo phản xạ — không cần chỉ báo cũng nhìn thấy tín hiệu',
+      'Không bị phân tâm bởi nhiễu vĩ mô khi đang giao dịch ngắn hạn',
+      'Thực dụng — chỉ tin vào những gì biểu đồ đang nói, không phải những gì nên xảy ra',
+      'Giỏi xử lý nhiều thông tin cùng lúc khi thị trường biến động mạnh',
+      'Không phức tạp hóa — giữ hệ thống đơn giản và hiệu quả',
+      'Thời gian nhìn màn hình nhiều dẫn đến nhận dạng mẫu tốt theo thời gian'
     ],
-    blind: `ISTP có một blind spot kinh điển: <strong>giỏi đọc cây nến nhưng không biết đang ở đâu trong bức tranh lớn.</strong><br><br>
-Bạn scalp tốt trong một trend — nhưng không nhận ra khi trend đó đang kết thúc. Bạn vào short một setup textbook — không biết rằng mình đang short trong uptrend mạnh trên weekly. Kết quả: winning setups nhỏ bị erase bởi một lần đi ngược trend lớn.<br><br>
-Điểm mù thứ hai: <strong>ISTP dễ bị cuốn vào micro-optimization mà quên mất macro context.</strong> Bạn có thể spend 2 tiếng tối ưu entry thêm 2 pip trong khi câu hỏi quan trọng hơn là "có nên trade timeframe này hôm nay không?"`,
-    hook: `ISTP chỉ cần thêm một thứ vào routine hiện tại: <strong>5 phút nhìn weekly và monthly trước khi mở chart intraday.</strong> Không cần phân tích phức tạp — chỉ cần biết mình đang trade cùng chiều hay ngược chiều với trend lớn hơn.`,
-    cta_q: 'Trước khi scalp, bạn có thường check timeframe cao hơn không?'
+    blind: `ISTP có một điểm mù kinh điển: <strong>giỏi đọc từng cây nến nhưng không biết đang ở đâu trong bức tranh lớn hơn.</strong><br><br>
+Bạn giao dịch ngắn hạn tốt trong một xu hướng — nhưng không nhận ra khi xu hướng đó đang kết thúc. Bạn vào lệnh bán một tín hiệu rõ như sách — không biết rằng mình đang bán trong xu hướng tăng mạnh trên tuần. Kết quả: những lệnh thắng nhỏ bị xóa sổ bởi một lần đi ngược xu hướng lớn.<br><br>
+Điểm mù thứ hai: <strong>ISTP dễ bị cuốn vào tối ưu hóa chi tiết nhỏ mà quên mất bối cảnh lớn hơn.</strong> Bạn có thể dành 2 tiếng tối ưu điểm vào thêm vài điểm trong khi câu hỏi quan trọng hơn là "hôm nay có nên giao dịch khung giờ này không?"`,
+    hook: `ISTP chỉ cần thêm một thứ vào thói quen hiện tại: <strong>5 phút nhìn biểu đồ tuần và tháng trước khi mở biểu đồ ngắn hạn.</strong> Không cần phân tích phức tạp — chỉ cần biết mình đang giao dịch cùng chiều hay ngược chiều xu hướng lớn hơn.`,
+    cta_q: 'Trước khi vào lệnh ngắn hạn, bạn có thường kiểm tra khung thời gian lớn hơn không?'
   },
 
   ISFP: {
     name: 'Nghệ Sĩ Phiêu Lưu',
-    style: 'Intuitive Discretionary Trader',
-    identity: `Bạn cảm nhận được khi nào thị trường "cảm thấy đúng" — và điều đó không phải mê tín. Đó là pattern recognition tích lũy từ screen time, được não xử lý dưới dạng intuition thay vì conscious analysis. Đây là thứ real.`,
+    style: 'Giao dịch tùy nghi theo cảm nhận',
+    identity: `Bạn cảm nhận được khi nào thị trường "cảm thấy đúng" — và điều đó không phải mê tín. Đó là khả năng nhận dạng mẫu tích lũy từ hàng giờ nhìn màn hình, được não xử lý dưới dạng trực giác thay vì phân tích có ý thức. Đây là thứ thật.`,
     strengths: [
-      'Cảm nhận thị trường tốt — nhận ra khi momentum đang shift trước khi chart xác nhận',
-      'Linh hoạt — không bị stuck vào một view khi thực tế thay đổi',
-      'Không over-analyze — vào lệnh khi cảm thấy đúng thay vì chờ 100 điều kiện',
-      'Thích nghi nhanh với regime mới',
-      'Ít bị confirmation bias vì không gắn chặt vào một thesis',
-      'Khi có kinh nghiệm, discretionary edge trở nên rất mạnh',
-      'Không bị overwhelm bởi quá nhiều rule',
-      'Tốt trong môi trường high volatility khi rule-based system breakdown'
+      'Cảm nhận thị trường tốt — nhận ra khi đà tăng đang thay đổi trước khi biểu đồ xác nhận',
+      'Linh hoạt — không bị cố định vào một quan điểm khi thực tế thay đổi',
+      'Không phân tích quá mức — vào lệnh khi cảm thấy đúng thay vì chờ 100 điều kiện',
+      'Thích nghi nhanh với pha thị trường mới',
+      'Ít bị thiên kiến xác nhận vì không gắn chặt vào một luận điểm',
+      'Khi có kinh nghiệm, lợi thế giao dịch tùy nghi trở nên rất mạnh',
+      'Không bị choáng ngợp bởi quá nhiều quy tắc',
+      'Tốt trong môi trường biến động cao khi hệ thống cứng nhắc không còn hoạt động'
     ],
-    blind: `ISFP có điểm mù nguy hiểm nhất trong tất cả type: <strong>không phân biệt được intuition thật sự và impulse.</strong><br><br>
-Cả hai đều "cảm thấy như đúng." Cả hai đều đến nhanh và confident. Nhưng một cái được build từ hàng nghìn giờ screen time, còn cái kia được trigger bởi FOMO hoặc boredom. Không có journal chi tiết, bạn không có cách nào biết cái nào đang dẫn dắt lệnh này.<br><br>
-Điểm mù thứ hai: <strong>ISFP thiếu checklist cứng — và điều đó làm chất lượng lệnh dao động cực lớn.</strong> Ngày tốt rất tốt, ngày xấu rất xấu. Variance cao không phải vì bạn thiếu skill, mà vì thiếu filter để block những lệnh "impulse mặc cảm giác như intuition."`,
-    hook: `Intuition của bạn có thể là edge thật — nhưng chỉ khi được đo lường. <strong>Nếu bạn không track xem lệnh nào là intuition và lệnh nào là impulse, bạn không có cơ sở để cải thiện.</strong> Và cải thiện ở đây không phải thêm rule — mà là học cách nghe đúng cái cần nghe.`,
-    cta_q: 'Bạn có phân biệt được khi nào mình đang trade bằng intuition và khi nào bằng impulse không?'
+    blind: `ISFP có điểm mù nguy hiểm nhất trong tất cả các nhóm: <strong>không phân biệt được trực giác thật sự và xung động nhất thời.</strong><br><br>
+Cả hai đều "cảm thấy như đúng." Cả hai đều đến nhanh và tự tin. Nhưng một cái được xây dựng từ hàng nghìn giờ nhìn màn hình, còn cái kia được kích hoạt bởi FOMO hoặc sự buồn chán. Không có nhật ký giao dịch chi tiết, bạn không có cách nào biết cái nào đang dẫn dắt lệnh này.<br><br>
+Điểm mù thứ hai: <strong>ISFP thiếu danh sách kiểm tra cứng — và điều đó làm chất lượng lệnh dao động cực lớn.</strong> Ngày tốt rất tốt, ngày xấu rất xấu. Sự biến động cao không phải vì bạn thiếu kỹ năng, mà vì thiếu bộ lọc để chặn những lệnh "xung động trá hình trực giác."`,
+    hook: `Trực giác của bạn có thể là lợi thế thật — nhưng chỉ khi được đo lường. <strong>Nếu bạn không theo dõi xem lệnh nào là trực giác và lệnh nào là xung động, bạn không có cơ sở để cải thiện.</strong> Và cải thiện ở đây không phải thêm quy tắc — mà là học cách nghe đúng tiếng nói cần nghe.`,
+    cta_q: 'Bạn có phân biệt được khi nào mình đang giao dịch bằng trực giác và khi nào bằng xung động không?'
   },
 
   ESTP: {
     name: 'Người Thúc Đẩy',
-    style: 'High-Frequency Scalper',
-    identity: `Bạn đọc momentum nhanh hơn hầu hết người. Trong một cây nến 1 phút, bạn đã biết mình muốn làm gì trong khi người khác còn đang vẽ Fibonacci. Áp lực không làm bạn tê liệt — nó làm bạn sharp hơn.`,
+    style: 'Giao dịch tần suất cao',
+    identity: `Bạn đọc đà thị trường nhanh hơn hầu hết người. Trong một cây nến 1 phút, bạn đã biết mình muốn làm gì trong khi người khác còn đang vẽ các mức giá. Áp lực không làm bạn tê liệt — nó làm bạn sắc bén hơn.`,
     strengths: [
-      'Execution nhanh và quyết đoán — không mất thời gian phân vân khi entry',
-      'Đọc được momentum shift sớm hơn phần lớn trader',
-      'Áp lực và volatility là môi trường bạn work tốt nhất — không phải worst',
-      'Stop loss được thực hiện nhanh — không có thói quen gồng lỗ kiểu INTJ',
-      'Khả năng xử lý nhiều thông tin đồng thời tốt',
-      'Thích nghi nhanh khi thị trường thay đổi character',
-      'Khi push size đúng lúc, profit factor rất cao',
-      'Không bị haunted bởi "what if" — ra quyết định xong là xong'
+      'Thực thi lệnh nhanh và quyết đoán — không mất thời gian phân vân khi vào lệnh',
+      'Đọc được sự thay đổi đà tăng sớm hơn phần lớn trader',
+      'Áp lực và biến động mạnh là môi trường bạn hoạt động tốt nhất — không phải tệ nhất',
+      'Cắt lỗ được thực hiện nhanh — không có thói quen gồng lỗ',
+      'Khả năng xử lý nhiều thông tin cùng lúc tốt',
+      'Thích nghi nhanh khi thị trường thay đổi tính cách',
+      'Khi tăng khối lượng đúng lúc, hiệu quả lệnh rất cao',
+      'Không bị ám ảnh bởi "nếu như" — ra quyết định xong là xong'
     ],
-    blind: `Con số thật về ESTP trader: <strong>win rate cao nhưng profit factor thấp — và một ngày bad wipe out nhiều ngày good.</strong><br><br>
-Pattern nguy hiểm nhất không phải overtrade — mà là <strong>size escalation sau thua lỗ.</strong> Thua 1 lệnh, lệnh sau size x1.5 "để bù." Thua tiếp, x2. Đây không phải discipline breakdown — đây là cách não ESTP hoạt động: bị kích thích bởi loss, não muốn action ngay lập tức để resolve cảm giác đó.<br><br>
-Và vì bạn <em>đã từng</em> gỡ được bằng cách này — nên pattern được reinforce. Cho đến ngày thị trường không cooperate và bạn down 30% trong một buổi chiều.`,
-    hook: `ESTP là type có potential scalp profit cao nhất — nhưng cũng là type có variance cao nhất. Câu hỏi không phải "bạn có trade tốt không" mà là <strong>"bạn có hệ thống nào ngăn bạn tự phá hủy vào những ngày xấu không?"</strong> Đây là ranh giới giữa profitable ESTP và blown account ESTP.`,
-    cta_q: 'Daily loss limit của bạn là bao nhiêu — và bạn có thực sự dừng khi chạm không?'
+    blind: `Con số thật về ESTP trader: <strong>tỉ lệ thắng cao nhưng hiệu quả tổng thể thấp — và một ngày tệ xóa sạch nhiều ngày tốt.</strong><br><br>
+Nguy hiểm nhất không phải giao dịch quá nhiều — mà là <strong>tăng khối lượng sau thua lỗ.</strong> Thua 1 lệnh, lệnh sau tăng khối lượng 1.5 lần "để bù." Thua tiếp, nhân đôi. Đây không phải mất kỷ luật — đây là cách não ESTP hoạt động: bị kích thích bởi thua lỗ, não muốn hành động ngay lập tức để giải quyết cảm giác đó.<br><br>
+Và vì bạn <em>đã từng</em> gỡ được bằng cách này — nên thói quen được củng cố. Cho đến ngày thị trường không hợp tác và bạn mất 30% trong một buổi chiều.`,
+    hook: `ESTP là nhóm có tiềm năng lợi nhuận ngắn hạn cao nhất — nhưng cũng là nhóm có sự biến động cao nhất. Câu hỏi không phải "bạn có giao dịch tốt không" mà là <strong>"bạn có hệ thống nào ngăn bạn tự phá hủy vào những ngày xấu không?"</strong> Đây là ranh giới giữa ESTP có lợi nhuận và ESTP cháy tài khoản.`,
+    cta_q: 'Giới hạn thua lỗ trong ngày của bạn là bao nhiêu — và bạn có thực sự dừng khi chạm không?'
   },
 
   ESFP: {
     name: 'Người Biểu Diễn',
-    style: 'Reactive Market Trader',
-    identity: `Bạn cảm nhận được energy của thị trường theo nghĩa đen. Khi volume tăng đột biến, khi volatility spike, khi chart bắt đầu "sống" — bạn cảm thấy nó trước khi phân tích nó. Đây là thứ không thể dạy — nhưng cũng là thứ nguy hiểm nhất nếu không được kiểm soát.`,
+    style: 'Giao dịch phản ứng theo thị trường',
+    identity: `Bạn cảm nhận được năng lượng của thị trường theo nghĩa đen. Khi khối lượng tăng đột biến, khi biến động tăng vọt, khi biểu đồ bắt đầu "sống" — bạn cảm thấy nó trước khi phân tích nó. Đây là thứ không thể dạy — nhưng cũng là thứ nguy hiểm nhất nếu không được kiểm soát.`,
     strengths: [
-      'Nhạy bén với biến động ngắn hạn — không bỏ lỡ các move nhanh',
-      'Năng động và không bị chán khi thị trường sideways — luôn tìm được gì đó',
-      'Không bị overthink — vào lệnh nhanh khi cơ hội xuất hiện',
-      'Tốt trong môi trường news-driven với volatility cao',
+      'Nhạy bén với biến động ngắn hạn — không bỏ lỡ các cú di chuyển nhanh',
+      'Năng động và không bị chán khi thị trường đi ngang — luôn tìm được gì đó',
+      'Không phân tích quá mức — vào lệnh nhanh khi cơ hội xuất hiện',
+      'Tốt trong môi trường có tin tức với biến động cao',
       'Học nhanh từ kinh nghiệm thực tế hơn là lý thuyết',
-      'Không gắn ego vào phân tích — dễ đổi hướng khi cần',
-      'Năng lượng cao duy trì được focus trong phiên dài',
-      'Nếu có EA hoặc automated system, bạn là người implement nhanh nhất'
+      'Không gắn cái tôi vào phân tích — dễ đổi hướng khi cần',
+      'Năng lượng cao duy trì được tập trung trong phiên dài',
+      'Nếu có hệ thống giao dịch tự động, bạn là người triển khai nhanh nhất'
     ],
-    blind: `ESFP có điểm mù rất khó nhìn thấy: <strong>bạn không trade thị trường — bạn đang phản ứng với thị trường.</strong> Và đó là hai thứ hoàn toàn khác nhau.<br><br>
-Trader phản ứng không có edge — họ luôn đi sau một bước. Khi chart đã đi rồi bạn mới thấy, entry đã không còn đẹp. Bạn mua vào chính xác lúc smart money đang bán.<br><br>
-Điểm mù nguy hiểm hơn: <strong>ESFP rất dễ bị trigger bởi cảm xúc của người xung quanh trong khi trade.</strong> Group panic sell, bạn panic sell theo. Group hype một coin, bạn chase theo. Không phải vì bạn thiếu thông minh — mà vì brain ESFP được wire để synchronize với cảm xúc xung quanh.`,
-    hook: `Thứ ESFP cần không phải thêm kiến thức kỹ thuật. Thứ cần là <strong>một trigger cứng để vào lệnh trước khi thị trường move — không phải sau khi.</strong> Shift từ reactive sang proactive này là sự khác biệt giữa ESFP trader thua tiền và ESFP trader kiếm tiền.`,
-    cta_q: 'Bạn thường vào lệnh trước hay sau khi move đã bắt đầu?'
+    blind: `ESFP có điểm mù rất khó nhìn thấy: <strong>bạn không giao dịch thị trường — bạn đang phản ứng với thị trường.</strong> Và đó là hai thứ hoàn toàn khác nhau.<br><br>
+Người phản ứng không có lợi thế — họ luôn đi sau một bước. Khi biểu đồ đã đi rồi bạn mới thấy, điểm vào đã không còn đẹp. Bạn mua vào chính xác lúc tiền thông minh đang bán ra.<br><br>
+Điểm mù nguy hiểm hơn: <strong>ESFP rất dễ bị kéo theo cảm xúc của người xung quanh trong khi giao dịch.</strong> Nhóm hoảng loạn bán, bạn bán theo. Nhóm hype một tài sản, bạn chạy theo. Không phải vì bạn thiếu thông minh — mà vì não bộ ESFP được lập trình để đồng bộ với cảm xúc xung quanh.`,
+    hook: `Thứ ESFP cần không phải thêm kiến thức kỹ thuật. Thứ cần là <strong>một điều kiện kích hoạt cứng để vào lệnh trước khi thị trường di chuyển — không phải sau khi.</strong> Sự chuyển đổi từ phản ứng sang chủ động này là sự khác biệt giữa ESFP thua tiền và ESFP kiếm tiền.`,
+    cta_q: 'Bạn thường vào lệnh trước hay sau khi cú di chuyển đã bắt đầu?'
   }
 };
 
@@ -445,10 +441,10 @@ const MBTI_GENERAL_INFO = {
 };
 
 const GAMBLER_LEVELS = [
-  {max:5,  label:'Trader Có Hệ Thống', tag:'tag-green',  color:'#27AE60', desc:'DNA lành mạnh. Bạn trade bằng hệ thống, không bằng cảm xúc. Tiếp tục tối ưu và scale up bền vững.'},
-  {max:10, label:'Vùng Xám — Rủi Ro Tiềm Ẩn', tag:'tag-yellow', color:'#E67E22', desc:'Tố chất tốt nhưng một số hành vi nguy hiểm đang ẩn náu. Xem lại trading journal để tìm pattern.'},
-  {max:15, label:'Gambler Đang Ẩn Náu', tag:'tag-red', color:'#E74C3C', desc:'Cần dừng live và review toàn bộ mindset trước khi tiếp tục. Vốn đang trong vùng nguy hiểm thực sự.'},
-  {max:20, label:'Cờ Bạc Trá Hình', tag:'tag-red', color:'#C0392B', desc:'Trading đang là sòng bạc với bạn. Nếu không thay đổi hoàn toàn, vốn sẽ về 0. Dừng live ít nhất 3 tháng.'},
+  {max:5,  label:'Trader Có Hệ Thống',        tag:'tag-green',  color:'#27AE60', desc:'Nền tảng tâm lý lành mạnh. Bạn giao dịch bằng hệ thống, không bằng cảm xúc. Tiếp tục tối ưu và mở rộng quy mô bền vững.'},
+  {max:10, label:'Vùng Xám — Rủi Ro Tiềm Ẩn', tag:'tag-yellow', color:'#E67E22', desc:'Tố chất tốt nhưng một số hành vi nguy hiểm đang ẩn náu. Xem lại nhật ký giao dịch để tìm mẫu lặp lại.'},
+  {max:15, label:'Cờ Bạc Đang Ẩn Náu',        tag:'tag-red',   color:'#E74C3C', desc:'Cần dừng giao dịch thật và xem xét lại toàn bộ tư duy trước khi tiếp tục. Vốn đang trong vùng nguy hiểm thực sự.'},
+  {max:20, label:'Cờ Bạc Trá Hình',           tag:'tag-red',   color:'#C0392B', desc:'Giao dịch đang là sòng bạc với bạn. Nếu không thay đổi hoàn toàn, vốn sẽ về không. Dừng giao dịch thật ít nhất 3 tháng.'},
 ];
 
 function getDims(){
@@ -489,13 +485,13 @@ function renderSimpleResult(){
       <h3>📋 Thông tin</h3>
       <ul>
         <li>${userData.name} · ${userData.age} tuổi · ${userData.job}</li>
-        <li>Muốn biết kết quả này có ý nghĩa gì với career và cuộc sống của bạn? Nhắn tôi.</li>
+        <li>Muốn biết kết quả này có ý nghĩa gì với sự nghiệp và cuộc sống của bạn? Nhắn tôi.</li>
       </ul>
     </div>
     <div class="cta-block">
-      <div class="cta-hook">Kết quả MBTI chỉ là bước đầu. Nếu bạn muốn hiểu sâu hơn về tính cách của mình và ứng dụng nó vào công việc hoặc đầu tư — <strong>tôi đọc kết quả của từng người và trả lời cụ thể, không phải template.</strong></div>
+      <div class="cta-hook">Kết quả MBTI chỉ là bước đầu. Nếu bạn muốn hiểu sâu hơn về tính cách của mình và ứng dụng nó vào công việc hoặc đầu tư — <strong>tôi đọc kết quả của từng người và trả lời cụ thể, không phải mẫu chung.</strong></div>
       <a class="btn-tele" href="${TELE_LINK}" target="_blank">💬 Nhắn Telegram để trao đổi</a>
-      <div class="cta-sub">Miễn phí · Phản hồi trong 24h</div>
+      <div class="cta-sub">Miễn phí · Phản hồi trong 24 giờ</div>
     </div>
     <div class="restart-wrap"><button class="btn-restart" onclick="goHome()">↺ Quay về trang chủ</button></div>
   `;
@@ -510,9 +506,9 @@ function renderFullResult(){
 
   let synText = '';
   if(mg === mt){
-    synText = `Cả hai bộ câu hỏi đều cho kết quả <strong>${mc}</strong> — đây là type đáng tin cậy nhất, vì tính cách chung và hành vi trading của bạn nhất quán với nhau.`;
+    synText = `Cả hai bộ câu hỏi đều cho kết quả <strong>${mc}</strong> — đây là nhóm đáng tin cậy nhất, vì tính cách chung và hành vi giao dịch của bạn nhất quán với nhau.`;
   } else {
-    synText = `MBTI tính cách chung cho <strong>${mg}</strong>, MBTI trader cho <strong>${mt}</strong>. Tổng hợp toàn bộ 68 câu cho ra <strong>${mc}</strong>. Có sự khác biệt giữa hai bộ — điều này thường có nghĩa là bạn hành xử khác trong trading so với cuộc sống thường ngày. Đây là thông tin quan trọng cần để ý.`;
+    synText = `MBTI tính cách chung cho <strong>${mg}</strong>, MBTI theo góc nhìn trader cho <strong>${mt}</strong>. Tổng hợp toàn bộ 68 câu cho ra <strong>${mc}</strong>. Có sự khác biệt giữa hai bộ — điều này thường có nghĩa là bạn hành xử khác trong giao dịch so với cuộc sống thường ngày. Đây là thông tin quan trọng cần chú ý.`;
   }
 
   const strengthsHtml = info.strengths.map(s=>`<li>${s}</li>`).join('');
@@ -529,11 +525,11 @@ function renderFullResult(){
       <div class="syn-title">⚡ Tổng hợp & kết luận</div>
       <div class="syn-row"><span class="syn-dot">▸</span><div>MBTI Tính Cách: <strong>${mg}</strong></div></div>
       <div class="syn-row"><span class="syn-dot">▸</span><div>MBTI Trader: <strong>${mt}</strong></div></div>
-      <div class="syn-row"><span class="syn-dot">▸</span><div>Type Tổng Hợp: <strong>${mc}</strong></div></div>
+      <div class="syn-row"><span class="syn-dot">▸</span><div>Nhóm Tổng Hợp: <strong>${mc}</strong></div></div>
       <div class="verdict">${synText}</div>
     </div>
 
-    <div class="sec-title">Bạn là ai trong trading</div>
+    <div class="sec-title">Bạn là ai trong giao dịch</div>
     <div class="a-card">
       <h3>🧬 Nhận diện</h3>
       <p>${info.identity}</p>
@@ -554,9 +550,9 @@ function renderFullResult(){
       <p>${info.blind}</p>
     </div>
 
-    <div class="sec-title">Gambler Index</div>
+    <div class="sec-title">Chỉ số Cờ Bạc</div>
     <div class="a-card">
-      <h3>🎯 Chỉ số rủi ro tâm lý &nbsp;<span class="tag ${gLvl.tag}">${gLvl.label}</span></h3>
+      <h3>🎯 Mức độ rủi ro tâm lý &nbsp;<span class="tag ${gLvl.tag}">${gLvl.label}</span></h3>
       <div class="g-score-row">
         <div><span class="g-num" style="color:${gColor}">${gamblerScore}</span><span class="g-max"> / 20</span></div>
         <div class="g-bar"><div class="g-fill" style="width:${gamblerScore/20*100}%;background:${gColor}"></div></div>
@@ -570,7 +566,7 @@ function renderFullResult(){
         ${info.hook}<br><br>
         <strong>${info.cta_q}</strong>
       </div>
-      <a class="btn-tele" href="${TELE_LINK}?text=Tôi vừa test DNA Giao Dịch — kết quả ${mc}, Gambler Index ${gamblerScore}/20. Tôi muốn trao đổi thêm." target="_blank">
+      <a class="btn-tele" href="${TELE_LINK}?text=Tôi vừa test DNA Giao Dịch — kết quả ${mc}, Chỉ số Cờ Bạc ${gamblerScore}/20. Tôi muốn trao đổi thêm." target="_blank">
         💬 Nhắn Telegram — Trả lời câu hỏi này
       </a>
       <div class="cta-sub">Tôi đọc kết quả của từng người và phản hồi cụ thể · Miễn phí</div>
