@@ -8,44 +8,96 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* Bấm copy toàn bộ nội dung trong thẻ <style> từ file gốc của bạn vào đây */
-    :root { --navy: #080D1A; --navy2: #0D1526; --card: #131E35; --card2: #19274A; --border: #1F2E4A; --border2: #2A3E62; --gold: #C9A84C; --gold2: #E8C97A; --gold-bg: rgba(201,168,76,0.08); --text: #E8EDF5; --sub: #6B7A99; --sub2: #8A9BB8; --green: #27AE60; --green2: #2ECC71; --red: #C0392B; --red2: #E74C3C; --yellow: #E67E22; --blue: #2980B9; --purple: #8E44AD; --radius: 12px; --radius2: 8px; }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 48px 48px; opacity: 0.18; pointer-events: none; z-index: 0; }
-    #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
-    .header { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(8,13,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: 0.5px; }
-    .logo em { color: var(--gold); font-style: normal; }
-    .screen { display: none; flex: 1; }
-    .screen.active { display: block; }
-    #screen-landing { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 60px 24px 80px; }
-    .landing-hero { text-align: center; max-width: 560px; margin-bottom: 48px; }
-    .hero-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-    .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 6vw, 48px); font-weight: 700; line-height: 1.15; margin-bottom: 18px; }
-    .hero-title em { color: var(--gold); font-style: normal; }
-    .hero-sub { font-size: 15px; color: var(--sub2); line-height: 1.7; margin-bottom: 32px; }
-    .layer-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
-    .pill { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid; font-family: 'Space Grotesk', sans-serif; font-weight: 500; }
-    .pill-blue  { color: #5882FF; border-color: rgba(88,130,255,.35); background: rgba(88,130,255,.08); }
-    .pill-green { color: var(--green2); border-color: rgba(46,204,113,.35); background: rgba(46,204,113,.08); }
-    .pill-red   { color: var(--red2); border-color: rgba(231,76,60,.35); background: rgba(231,76,60,.08); }
-    .reg-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; max-width: 480px; width: 100%; position: relative; overflow: hidden; }
-    .reg-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(201,168,76,.12), transparent 70%); pointer-events: none; }
-    .reg-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 20px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .fg { display: flex; flex-direction: column; gap: 6px; }
-    .fg.full { grid-column: 1 / -1; }
-    .fg label { font-size: 11px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: 0.8px; color: var(--sub); text-transform: uppercase; }
-    .fg input, .fg select { background: var(--navy2); border: 1px solid var(--border2); border-radius: var(--radius2); padding: 11px 14px; color: var(--text); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s; width: 100%; }
-    .fg input:focus, .fg select:focus { border-color: var(--gold); }
-    .hp { position: absolute; opacity: 0; top: -9999px; left: -9999px; }
-    .btn-begin { width: 100%; margin-top: 22px; background: var(--gold); border: none; border-radius: var(--radius2); padding: 14px; color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; letter-spacing: 0.5px; transition: background .2s, transform .15s; }
-    .btn-begin:hover { background: var(--gold2); transform: translateY(-1px); }
-    .reg-note { margin-top: 14px; font-size: 11px; color: var(--sub); text-align: center; line-height: 1.6; }
-    .field-err { font-size: 11px; color: var(--red2); margin-top: 3px; display: none; }
-    @media (max-width: 520px) { .reg-card { padding:24px 20px; } .form-grid { grid-template-columns:1fr; } .fg.full { grid-column:1; } }
+    :root { --navy:#080D1A; --navy2:#0D1526; --card:#131E35; --card2:#19274A; --border:#1F2E4A; --border2:#2A3E62; --gold:#C9A84C; --gold2:#E8C97A; --text:#E8EDF5; --sub:#6B7A99; --sub2:#8A9BB8; --green:#27AE60; --green2:#2ECC71; --red:#C0392B; --red2:#E74C3C; --yellow:#E67E22; --radius:12px; --radius2:8px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;opacity:.18;pointer-events:none;z-index:0}
+    #app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+    .header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:rgba(8,13,26,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;letter-spacing:.5px}
+    .logo em{color:var(--gold);font-style:normal}
+
+    /* ── LANDING ── */
+    #screen-landing{display:flex;flex-direction:column;align-items:center;padding:60px 24px 100px}
+    .landing-hero{text-align:center;max-width:560px;margin-bottom:48px}
+    .hero-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,6vw,48px);font-weight:700;line-height:1.15;margin-bottom:18px}
+    .hero-title em{color:var(--gold);font-style:normal}
+    .hero-sub{font-size:15px;color:var(--sub2);line-height:1.7;margin-bottom:32px}
+    .layer-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+    .pill{font-size:12px;padding:6px 14px;border-radius:20px;border:1px solid;font-family:'Space Grotesk',sans-serif;font-weight:500}
+    .pill-blue{color:#5882FF;border-color:rgba(88,130,255,.35);background:rgba(88,130,255,.08)}
+    .pill-green{color:var(--green2);border-color:rgba(46,204,113,.35);background:rgba(46,204,113,.08)}
+    .pill-red{color:var(--red2);border-color:rgba(231,76,60,.35);background:rgba(231,76,60,.08)}
+
+    /* ── FORM ĐĂNG KÝ ── */
+    .reg-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px;max-width:480px;width:100%;position:relative;overflow:hidden}
+    .reg-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(201,168,76,.12),transparent 70%);pointer-events:none}
+    .reg-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:20px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .fg{display:flex;flex-direction:column;gap:6px}
+    .fg.full{grid-column:1/-1}
+    .fg label{font-size:11px;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.8px;color:var(--sub);text-transform:uppercase}
+    .fg input,.fg select{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--radius2);padding:11px 14px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;width:100%}
+    .fg input:focus,.fg select:focus{border-color:var(--gold)}
+    .hp{position:absolute;opacity:0;top:-9999px;left:-9999px}
+    .btn-begin{width:100%;margin-top:22px;background:var(--gold);border:none;border-radius:var(--radius2);padding:14px;color:var(--navy);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.5px;transition:background .2s,transform .15s}
+    .btn-begin:hover{background:var(--gold2);transform:translateY(-1px)}
+    .reg-note{margin-top:14px;font-size:11px;color:var(--sub);text-align:center;line-height:1.6}
+    .field-err{font-size:11px;color:var(--red2);margin-top:3px;display:none}
+
+    /* ── DIVIDER ── */
+    .section-divider{display:flex;align-items:center;gap:16px;max-width:480px;width:100%;margin:48px 0 0}
+    .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .section-divider span{font-size:11px;color:var(--sub);font-family:'Space Grotesk',sans-serif;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap}
+
+    /* ── LOOKUP CARD ── */
+    .lookup-card{background:var(--card2);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;max-width:480px;width:100%;margin-top:20px}
+    .lookup-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+    .lookup-sub{font-size:13px;color:var(--sub);line-height:1.6;margin-bottom:20px}
+    .lookup-row{display:flex;gap:10px;align-items:flex-start}
+    .type-input-wrap{position:relative;flex:1}
+    .type-input{background:var(--navy2);border:1px solid var(--border2);border-radius:var(--radius2);padding:11px 14px;color:var(--text);font-size:18px;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:3px;text-transform:uppercase;outline:none;transition:border-color .2s;width:100%;text-align:center}
+    .type-input:focus{border-color:var(--gold)}
+    .type-input::placeholder{font-size:13px;letter-spacing:1px;font-weight:400;color:var(--sub);text-transform:none}
+    .btn-check{background:var(--gold);border:none;border-radius:var(--radius2);padding:11px 22px;color:var(--navy);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s;flex-shrink:0}
+    .btn-check:hover{background:var(--gold2);transform:translateY(-1px)}
+    .lookup-err{font-size:12px;color:var(--red2);margin-top:8px;display:none}
+
+    /* ── LOOKUP RESULT PANEL ── */
+    .lookup-result{margin-top:20px;display:none}
+    .lr-hero{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;text-align:center;margin-bottom:12px;position:relative;overflow:hidden}
+    .lr-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(201,168,76,.1),transparent 60%);pointer-events:none}
+    .lr-type{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;letter-spacing:4px;color:var(--gold);line-height:1}
+    .lr-name{font-size:15px;color:var(--sub2);margin-top:5px}
+    .lr-style{font-size:12px;color:var(--gold);font-family:'Space Grotesk',sans-serif;font-weight:600;margin-top:4px}
+    .lr-section{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--sub);margin:14px 0 8px}
+    .lr-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 16px;margin-bottom:8px}
+    .lr-card p{font-size:13px;color:var(--sub2);line-height:1.8}
+    .lr-card ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+    .lr-card li{font-size:12px;color:var(--sub2);line-height:1.7;padding-left:14px;position:relative}
+    .lr-card li::before{content:'▸';position:absolute;left:0;color:var(--gold);font-size:9px;top:4px}
+    .lr-gambler{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 16px;margin-bottom:8px}
+    .lr-gambler p{font-size:13px;color:var(--sub2);line-height:1.8}
+
+    /* CTA trong lookup */
+    .lr-cta{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(41,128,185,.05));border:1px solid rgba(201,168,76,.3);border-radius:var(--radius2);padding:16px;margin-top:4px}
+    .lr-cta p{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:12px}
+    .lr-cta p strong{color:var(--gold)}
+    .btn-tele-sm{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;background:#229ED9;border:none;border-radius:var(--radius2);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;transition:background .2s}
+    .btn-tele-sm:hover{background:#1a8bbf}
+    .lr-retake{text-align:center;margin-top:12px}
+    .btn-retake{background:transparent;border:1px solid var(--border2);border-radius:var(--radius2);padding:9px 20px;color:var(--sub);font-family:'Space Grotesk',sans-serif;font-size:12px;cursor:pointer;transition:all .2s}
+    .btn-retake:hover{border-color:var(--gold);color:var(--gold)}
+
+    @media(max-width:520px){
+      .reg-card,.lookup-card{padding:22px 18px}
+      .form-grid{grid-template-columns:1fr}
+      .fg.full{grid-column:1}
+      .lookup-row{flex-direction:column}
+      .btn-check{width:100%}
+    }
   </style>
 </head>
 <body>
@@ -54,7 +106,9 @@
     <div class="logo">DNA <em>Giao Dịch</em></div>
   </header>
 
-  <div class="screen active" id="screen-landing">
+  <div id="screen-landing">
+
+    <!-- HERO -->
     <div class="landing-hero">
       <div class="hero-eyebrow">Module 0 — Tâm Lý Trading</div>
       <h1 class="hero-title">Khám phá <em>DNA</em><br>giao dịch của bạn</h1>
@@ -62,10 +116,11 @@
       <div class="layer-pills">
         <span class="pill pill-blue">48 câu MBTI Tính Cách</span>
         <span class="pill pill-green">20 câu MBTI Trader</span>
-        <span class="pill pill-red">10 câu Gambler Index</span>
+        <span class="pill pill-red">10 câu Chỉ Số Cờ Bạc</span>
       </div>
     </div>
 
+    <!-- FORM LÀM BÀI MỚI -->
     <div class="reg-card">
       <div class="reg-title">Thông tin của bạn</div>
       <div class="form-grid">
@@ -104,40 +159,215 @@
       <button class="btn-begin" onclick="beginQuiz()">Bắt đầu kiểm tra →</button>
       <p class="reg-note">🔒 Thông tin của bạn được bảo mật. Chỉ dùng để cá nhân hóa kết quả.</p>
     </div>
-  </div>
+
+    <!-- DIVIDER -->
+    <div class="section-divider"><span>Hoặc tra cứu kết quả cũ</span></div>
+
+    <!-- LOOKUP CARD -->
+    <div class="lookup-card">
+      <div class="lookup-title">Bạn đã biết nhóm tính cách của mình?</div>
+      <div class="lookup-sub">Nhập 4 chữ cái nhóm MBTI để đọc lại phân tích phong cách giao dịch và điểm mù của bạn.</div>
+      <div class="lookup-row">
+        <div class="type-input-wrap">
+          <input type="text"
+                 class="type-input"
+                 id="lookup-input"
+                 placeholder="Ví dụ: ISTJ"
+                 maxlength="4"
+                 oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')"
+                 onkeydown="if(event.key==='Enter')lookupType()">
+        </div>
+        <button class="btn-check" onclick="lookupType()">Tra cứu</button>
+      </div>
+      <div class="lookup-err" id="lookup-err">Nhóm tính cách không hợp lệ. Vui lòng nhập đúng 4 chữ cái (ví dụ: INTJ, ESTP...).</div>
+
+      <!-- KẾT QUẢ TRA CỨU -->
+      <div class="lookup-result" id="lookup-result"></div>
+    </div>
+
+  </div><!-- end screen-landing -->
 </div>
 
 <script>
-  document.getElementById('form-ts').value = Date.now();
+// ── ANTI-SPAM ──────────────────────────────────────────────
+document.getElementById('form-ts').value = Date.now();
 
-  function beginQuiz(){
-    if(document.getElementById('hp-field').value !== '') return;
-    const elapsed = Date.now() - parseInt(document.getElementById('form-ts').value);
-    if(elapsed < 3000) return;
+function beginQuiz(){
+  if(document.getElementById('hp-field').value !== '') return;
+  const elapsed = Date.now() - parseInt(document.getElementById('form-ts').value);
+  if(elapsed < 3000) return;
 
-    const name = document.getElementById('f-name').value.trim();
-    const age = parseInt(document.getElementById('f-age').value);
-    const email = document.getElementById('f-email').value.trim();
-    const job = document.getElementById('f-job').value;
-    const jobText = document.getElementById('f-job').options[document.getElementById('f-job').selectedIndex]?.text;
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const name = document.getElementById('f-name').value.trim();
+  const age = parseInt(document.getElementById('f-age').value);
+  const email = document.getElementById('f-email').value.trim();
+  const job = document.getElementById('f-job').value;
+  const jobText = document.getElementById('f-job').options[document.getElementById('f-job').selectedIndex]?.text;
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let ok = true;
 
-    let isValid = true;
-    
-    if(!name) { document.getElementById('err-name').style.display = 'block'; isValid = false; } else { document.getElementById('err-name').style.display = 'none'; }
-    if(!age || age<15 || age>70) { document.getElementById('err-age').style.display = 'block'; isValid = false; } else { document.getElementById('err-age').style.display = 'none'; }
-    if(!emailRe.test(email)) { document.getElementById('err-email').style.display = 'block'; isValid = false; } else { document.getElementById('err-email').style.display = 'none'; }
-    if(!job) { document.getElementById('err-job').style.display = 'block'; isValid = false; } else { document.getElementById('err-job').style.display = 'none'; }
+  const show = (id, vis) => document.getElementById(id).style.display = vis ? 'block' : 'none';
+  if(!name){ show('err-name',true); ok=false; } else show('err-name',false);
+  if(!age||age<15||age>70){ show('err-age',true); ok=false; } else show('err-age',false);
+  if(!emailRe.test(email)){ show('err-email',true); ok=false; } else show('err-email',false);
+  if(!job){ show('err-job',true); ok=false; } else show('err-job',false);
+  if(!ok) return;
 
-    if(!isValid) return;
+  sessionStorage.setItem('userData', JSON.stringify({ name, age, email, job: jobText }));
+  window.location.href = 'test.html';
+}
 
-    // Lưu dữ liệu vào SessionStorage
-    const userData = { name, age, email, job: jobText };
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-    
-    // Chuyển trang
-    window.location.href = 'test.html';
+// ── DATA 16 TYPE ───────────────────────────────────────────
+const TELE = 'https://t.me/duyleez';
+
+const TYPES = {
+  ISTJ:{ name:'Người Hậu Cần', style:'Giao dịch theo quy tắc',
+    identity:'Bạn là người hiếm hoi thực sự đọc hết kế hoạch giao dịch trước khi vào lệnh. Ngón tay bạn dừng lại đúng lúc — không phải vì sợ, mà vì quy tắc chưa cho phép. Đây là lợi thế cạnh tranh thật sự trong một thị trường mà 90% giao dịch bằng cảm xúc.',
+    strengths:['Có thể ngồi nhìn thị trường chạy mà không vào lệnh — và không cảm thấy bỏ lỡ gì','Khối lượng lệnh nhất quán — 1% rủi ro là 1%, không phải tuỳ hứng','Khi thua lỗ, câu hỏi đầu tiên là "sai ở đâu trong hệ thống?" thay vì đổ lỗi thị trường','Có thể chạy cùng một chiến lược 6 tháng mà không chán, trong khi người khác đổi phương pháp mỗi tuần'],
+    blind:'Bạn tuân thủ quy tắc đến mức không nhận ra khi quy tắc đó đã lỗi thời. Thị trường tháng 3 khác tháng 9 — nhưng bạn vẫn chạy cùng một hệ thống vì "chưa đủ dữ liệu để thay đổi." Điểm mù thứ hai: giữ lệnh thua nhiều ngày vì "chưa chạm điểm cắt lỗ" trong khi mọi diễn biến giá đã nói rõ tín hiệu không còn hợp lệ.',
+    hook:'Câu hỏi thật không phải "hệ thống có đúng không?" — mà là <strong>bạn có biết khi nào nên tắt hệ thống của mình không?</strong> Đây là thứ phân biệt người giao dịch cơ học với trader bậc thầy.',
+    cta:'Bạn đang dùng bộ lọc nào để nhận biết pha thị trường cho hệ thống hiện tại?' },
+
+  INTJ:{ name:'Kiến Trúc Sư', style:'Giao dịch có hệ thống',
+    identity:'Bạn có thứ mà 95% trader không có: một luận điểm rõ ràng — tại sao vào lệnh này, dựa trên đâu, và kịch bản nào sẽ chứng minh bạn sai. Khi logic đó đúng, bạn đúng rất đẹp.',
+    strengths:['Giải thích được tại sao vào lệnh bằng ít nhất 3 lý do kỹ thuật hoặc vĩ mô','Không bị ảnh hưởng bởi nhiễu loạn — biểu đồ đỏ rực vẫn giữ lệnh nếu luận điểm chưa bị bác bỏ','Tự xây được hệ thống riêng, không cần sao chép của ai','Sự tự tin đến từ nghiên cứu — không phải may mắn. Điều đó bền hơn'],
+    blind:'Kịch bản gần như mọi INTJ đều trải qua: luận điểm đúng, nhưng tài khoản về mo. Bạn không chốt vì "mục tiêu chưa đến," rồi nhồi thêm lệnh vì "luận điểm vẫn còn nguyên," rồi cắt lỗ đúng lúc giá chuẩn bị đi tiếp. Vấn đề không phải phân tích sai — mà là bạn đã gắn cái tôi vào luận điểm đó.',
+    hook:'Có kỹ thuật gọi là <strong>"điều kiện vô hiệu hóa luận điểm"</strong> — định nghĩa trước điều gì chứng minh bạn sai <em>trước khi</em> vào lệnh. INTJ là nhóm duy nhất đủ kỷ luật để thực sự làm được — nhưng hầu hết không biết cách thiết lập đúng.',
+    cta:'Điều kiện nào sẽ khiến bạn thừa nhận luận điểm của mình sai — và bạn đặt điều đó ra trước hay sau khi vào lệnh?' },
+
+  INTP:{ name:'Nhà Tư Duy', style:'Nghiên cứu định lượng',
+    identity:'Bạn dành nhiều giờ nhất để hiểu thị trường — không phải để kiếm tiền ngay, mà vì muốn biết nó hoạt động thế nào. Hồ sơ kiểm tra của bạn chi tiết hơn 90% trader. Và đó vừa là điểm mạnh lớn nhất, vừa là cái bẫy nguy hiểm nhất.',
+    strengths:['Không bao giờ vào lệnh mà không hiểu tại sao — đây là thứ hiếm','Phát hiện lỗi logic trong hệ thống của người khác rất tốt','Không bị cuốn theo cơn sốt — cần số liệu để tin, không phải lời hứa','Khi tìm ra lợi thế thật sự, khai thác nó triệt để hơn ai hết'],
+    blind:'INTP có vòng lặp chết người: nghiên cứu → thấy chưa đủ → nghiên cứu thêm → thấy vẫn chưa đủ → không bao giờ giao dịch thật. Bạn có thể có hệ thống đã kiểm tra 3 năm dữ liệu nhưng vẫn chưa vào lệnh thật vì "cần kiểm tra thêm." Điểm mù thứ hai: bạn tối ưu thứ có thể đo được và bỏ qua thứ không đo được — tâm lý khi thực thi lệnh thật.',
+    hook:'Câu hỏi không phải "hệ thống có đủ tốt chưa?" — hầu hết INTP đã có hệ thống đủ tốt từ lâu. Câu hỏi thật là <strong>điều gì đang thực sự ngăn bạn giao dịch thật?</strong>',
+    cta:'Hệ thống của bạn đã kiểm tra xong chưa — hay vẫn đang trong vòng lặp đó?' },
+
+  ENTJ:{ name:'Tướng Lĩnh', style:'Quản lý vốn chuyên nghiệp',
+    identity:'Bạn không chỉ giao dịch — bạn quản lý giao dịch. Bạn nghĩ theo danh mục, theo phân bổ rủi ro, theo kỳ vọng tháng. Đây là tư duy của người quản lý quỹ, không phải trader nhỏ lẻ bình thường.',
+    strengths:['Ra quyết định nhanh và không do dự — vào và thoát lệnh không mất thời gian phân vân','Biết phân tán rủi ro thay vì dồn hết vào một lệnh','Học từ thua lỗ rất nhanh — phân tích xong, điều chỉnh, tiếp tục','Tư duy dài hạn — không bị kẹt trong nhiễu loạn ngắn ngày'],
+    blind:'ENTJ có lỗ hổng cụ thể: khối lượng lệnh tăng theo mức độ tự tin, không theo hệ thống. Khi "chắc" về một lệnh, khối lượng tự nhiên lớn hơn — và vì ENTJ thường đúng nhiều hơn sai, thói quen này được củng cố cho đến khi gặp một lần sai lớn với vị thế quá lớn. Điểm mù thứ hai: rất khó thừa nhận sai khi đang có người xem.',
+    hook:'ENTJ là nhóm có tiềm năng quản lý vốn lớn nhất — nhưng cũng dễ cháy tài khoản nhất khi gặp cú sốc với vị thế quá lớn. <strong>Ranh giới giữa hai kịch bản đó mỏng hơn bạn nghĩ.</strong>',
+    cta:'Khối lượng lệnh của bạn có bị ảnh hưởng bởi mức độ "chắc chắn" về lệnh đó không?' },
+
+  ENTP:{ name:'Nhà Tranh Luận', style:'Giao dịch theo đà',
+    identity:'Bạn là người trong nhóm hay đặt câu hỏi ngược: "Nhưng nếu thị trường làm điều này thì sao?" — và thường bạn đúng. Bạn thấy được nhiều kịch bản cùng lúc trong khi người khác chỉ thấy một hướng.',
+    strengths:['Không bị cố định vào một chiều — có thể mua buổi sáng, bán buổi chiều nếu cấu trúc thay đổi','Học khái niệm mới cực nhanh — người khác mất tháng, bạn nắm trong tuần','Không ngại đi ngược đám đông nếu logic đủ mạnh','Khi tập trung, chất lượng phân tích thuộc top 10%'],
+    blind:'Vấn đề của ENTP không phải thiếu kiến thức — mà là quá nhiều kiến thức, quá ít thực thi nhất quán. Thường có 3–4 hệ thống chạy song song, không cái nào được kiểm tra đủ lâu. Nguy hiểm nhất: ENTP chán hệ thống đang thắng — rồi chỉnh sửa nó cho đến khi nó không còn hoạt động nữa.',
+    hook:'ENTP cần thứ ít ai nghĩ đến: <strong>quy trình đối phó với cảm giác chán</strong> — một bộ câu hỏi bắt buộc trả lời khi muốn chỉnh sửa hệ thống đang hoạt động tốt.',
+    cta:'Bạn đang chạy mấy hệ thống song song? Cái nào bạn duy trì được lâu nhất?' },
+
+  INFJ:{ name:'Người Tiên Tri', style:'Giao dịch theo trực giác vĩ mô',
+    identity:'Bạn cảm nhận thị trường trước khi biểu đồ xác nhận — và đôi khi điều đó đúng đến mức đáng sợ. Bạn không chỉ đọc biểu đồ, bạn đọc câu chuyện phía sau biểu đồ.',
+    strengths:['Trực giác thị trường tốt — cảm nhận đúng xu hướng trước khi có xác nhận','Nhìn được bức tranh lớn mà người giao dịch ngắn hạn bỏ qua','Kiên nhẫn chờ tín hiệu thật sự, không bị nhiễu ngắn hạn làm phân tâm','Khi đúng, thường đúng rất sớm — vào được ở vùng giá tốt nhất'],
+    blind:'INFJ có nghịch lý: trực giác tốt nhưng thực thi tệ. Cảm thấy thị trường sẽ đi đâu nhưng do dự vào lệnh vì "chưa đủ xác nhận." Điểm mù nguy hiểm hơn: khi lệnh đi ngược, INFJ không cắt lỗ — họ "cảm thấy" thị trường sẽ quay lại. Và đôi khi đúng thật, điều đó càng củng cố thói quen gồng lỗ.',
+    hook:'Trực giác của bạn có thể là lợi thế thật — nhưng chỉ khi được gắn với <strong>một điều kiện kích hoạt rõ ràng để chuyển niềm tin thành hành động.</strong> Không có điều đó, trực giác chỉ là tiếng ồn đắt tiền.',
+    cta:'Bạn đã bao giờ thấy đúng nhưng không vào được lệnh, rồi nhìn thị trường đi đúng hướng đó chưa?' },
+
+  INFP:{ name:'Người Hòa Giải', style:'Giao dịch theo câu chuyện',
+    identity:'Bạn giao dịch không chỉ bằng biểu đồ — bạn giao dịch bằng câu chuyện. Khi hiểu tại sao một tài sản đáng tăng, bạn có thể giữ lệnh qua nhiễu loạn tốt hơn hầu hết người.',
+    strengths:['Kiên nhẫn chờ tín hiệu chín muồi — không bị FOMO dễ dàng','Trung thành với hệ thống khi đã tin — không bỏ giữa chừng vì vài lệnh thua','Không bị áp lực người khác làm thay đổi quyết định khi đã tin tưởng','Tỉ lệ bám theo một tài sản đủ lâu để nắm bắt được cú tăng lớn'],
+    blind:'INFP gắn cảm xúc vào lệnh như gắn cảm xúc vào con người. Khi lệnh đang thua, không cắt lỗ — họ "tin tưởng vào nó." Và đôi khi lệnh đó hồi phục thật, điều đó càng củng cố thói quen gồng lỗ. Điểm mù thứ hai: rất khó giao dịch ngược lại cảm xúc về một tài sản — bạn sẽ tìm lý do để mua dù tín hiệu không đẹp.',
+    hook:'INFP cần thứ nghe đơn giản nhưng rất khó làm: <strong>tách biệt "tôi thích tài sản này" khỏi "đây là tín hiệu đáng giao dịch."</strong> Khoảng cách giữa hai câu đó chính là nơi tiền biến mất.',
+    cta:'Bạn có đang giữ lệnh nào mà nếu thành thật thì tín hiệu đã không còn hợp lệ không?' },
+
+  ENFJ:{ name:'Người Dẫn Dắt', style:'Giao dịch theo tâm lý đám đông',
+    identity:'Bạn đọc được tâm lý đám đông cực tốt — cảm nhận khi nào thị trường sợ hãi, khi nào tham lam, trước khi các chỉ số xác nhận. Đây là kỹ năng thật sự. Vấn đề là bạn đang dùng nó để đi theo đám đông thay vì giao dịch ngược lại.',
+    strengths:['Đọc tâm lý thị trường tốt — cảm nhận trạng thái trước khi biểu đồ phản ánh','Nhạy cảm với tin tức và phản ứng của thị trường','Xây được mạng lưới trader tốt — thông tin chất lượng đến nhanh hơn','Không cố chấp — sẵn sàng thay đổi quan điểm khi có thông tin mới'],
+    blind:'Điểm mù lớn nhất: không có hệ thống riêng — đang giao dịch dựa trên đồng thuận của người khác. Khi nhóm lạc quan, bạn mua. Khi nhóm hoảng loạn, bạn bán. Đây là thứ dẫn bạn vào đúng lúc đám đông sai nhất — đỉnh và đáy.',
+    hook:'Bạn có tất cả công cụ để là người giao dịch ngược chiều xuất sắc. Nhưng để làm được, bạn cần <strong>tách biệt việc đọc tâm lý đám đông khỏi việc bị cuốn bởi nó.</strong> Ranh giới đó, một khi vượt qua được, là lợi thế cực kỳ mạnh.',
+    cta:'Lệnh cuối bạn vào vì tín hiệu của mình hay vì thấy người khác đang vào?' },
+
+  ENFP:{ name:'Người Truyền Cảm Hứng', style:'Giao dịch theo tin tức',
+    identity:'Bạn phản xạ với thị trường nhanh hơn hầu hết người — khi tin ra, bạn đã vào lệnh trước khi người khác đọc xong tiêu đề. Bạn thấy cơ hội ở khắp nơi. Đây là món quà — khi được kiểm soát.',
+    strengths:['Phản xạ nhanh với sự kiện và tin tức — thực thi tốt trong môi trường biến động','Sáng tạo trong việc tìm tín hiệu mà người khác không nghĩ đến','Không bị stuck vào một quan điểm — chuyển hướng nhanh khi sai','Khi vào được đúng đà tăng, hiệu quả lệnh rất cao'],
+    blind:'ENFP có con số không ai muốn nhìn: tổng số lệnh trong tháng cao gấp 3 lần cần thiết, nhưng lợi nhuận ròng chỉ bằng 30% nếu chỉ giữ lại những tín hiệu tốt nhất. Điểm mù nguy hiểm hơn: rất giỏi tạo ra lý do hợp lý cho những gì mình muốn làm — bạn có thể biện hộ cho bất kỳ lệnh nào trong 30 giây.',
+    hook:'ENFP không cần thêm chiến lược — bạn có quá nhiều rồi. Thứ cần là <strong>một bộ lọc để loại bỏ 70% số lệnh bạn muốn vào</strong> và chỉ giữ lại phần có lợi thế thật sự.',
+    cta:'Nếu bạn chỉ được phép vào 3 lệnh tuần này, bạn sẽ chọn những lệnh nào?' },
+
+  ISFJ:{ name:'Người Bảo Vệ', style:'Giao dịch thận trọng, bảo toàn vốn',
+    identity:'Bạn hiểu điều mà nhiều trader mất nhiều năm mới học được: bảo toàn vốn quan trọng hơn kiếm tiền. Điều đó làm bạn sống sót qua những giai đoạn mà trader khác cháy tài khoản.',
+    strengths:['Mức thua tối đa nhỏ và có thể quản lý được — vốn không biến mất đột ngột','Quản lý rủi ro tự nhiên — không cần ai nhắc về khối lượng lệnh','Kiên nhẫn cao — có thể chờ tín hiệu thật sự mà không bị FOMO','Kết quả ổn định và dự đoán được theo thời gian'],
+    blind:'ISFJ có thiệt thòi rất im lặng: tâm lý sợ mất mát mạnh đến mức chốt lãi quá sớm và gồng lỗ quá lâu — đúng ngược chiều những gì nên làm. Khi lệnh có lãi, chốt ngay trước khi nó mất. Khi lệnh lỗ, đợi thêm để có thể hòa vốn. Đây là công thức ngược của trader có lời.',
+    hook:'Nghịch lý ISFJ cần đối mặt: <strong>để bảo toàn vốn dài hạn, đôi khi phải chấp nhận rủi ro lớn hơn trong ngắn hạn.</strong> Và để tăng trưởng tài khoản, bạn phải học cách ngồi yên khi lệnh đang có lãi — thứ ngược bản năng hoàn toàn.',
+    cta:'Lệnh lãi lớn nhất của bạn — bạn đã giữ được bao lâu trước khi chốt?' },
+
+  ESTJ:{ name:'Giám Đốc Điều Hành', style:'Giao dịch theo quy trình tổ chức',
+    identity:'Bạn không giao dịch theo cảm hứng — bạn có quy trình. Danh sách kiểm tra trước khi vào lệnh, đánh giá cuối tuần, mục tiêu tháng rõ ràng. Đây là cách các tổ chức giao dịch lớn vận hành.',
+    strengths:['Quy trình rõ ràng — biết chính xác cần làm gì ở mỗi bước','Tự chịu trách nhiệm với kết quả, không đổ lỗi thị trường','Thực thi nhất quán — ít bị ảnh hưởng bởi tâm trạng từng ngày','Mở rộng quy mô tốt khi vốn tăng — quy trình không thay đổi khi con số lớn hơn'],
+    blind:'ESTJ có điểm mù cụ thể: thiên kiến xác nhận cực mạnh khi đã có quan điểm. Đã quyết định thị trường tăng thì mọi tín hiệu đều được đọc theo hướng tăng. Chart giảm? "Điều chỉnh bình thường." Khối lượng giảm? "Đang tích lũy." Đây là đọc có chọn lọc, không phải phân tích.',
+    hook:'Quy trình của bạn là điểm mạnh — nhưng quy trình cần được cập nhật định kỳ. <strong>Một quy trình được xem xét lại 3 tháng một lần khác hoàn toàn với một quy trình được coi là đúng mãi mãi.</strong>',
+    cta:'Lần cuối cùng bạn xem xét lại và cập nhật quy trình giao dịch của mình là khi nào?' },
+
+  ESFJ:{ name:'Người Lãnh Sự', style:'Giao dịch dựa vào cộng đồng',
+    identity:'Bạn học giao dịch nhanh nhất khi có cộng đồng xung quanh. Bạn hấp thụ thông tin từ nhiều nguồn nhanh và tổng hợp được bức tranh tâm lý tốt. Đây là kỹ năng thật — nhưng đang được dùng sai mục đích.',
+    strengths:['Mạng lưới rộng — thông tin quan trọng đến với bạn nhanh hơn người giao dịch một mình','Đọc được tâm lý của trader nhỏ lẻ — biết đám đông đang nghĩ gì','Học hỏi từ người khác hiệu quả — không cần tự mày mò từ đầu','Giao tiếp tốt — có thể giải thích giao dịch rõ ràng'],
+    blind:'Vấn đề cốt lõi: chưa có hệ thống riêng — mọi lệnh đều được kích hoạt bởi ai đó hoặc điều gì đó bên ngoài. Từng lệnh đơn lẻ có thể có lý, nhưng cộng lại không có lợi thế nhất quán. Thêm vào đó: rất khó giao dịch ngược lại với những gì người xung quanh đang làm dù biết đám đông đang sai.',
+    hook:'ESFJ cần một thứ trước tất cả: <strong>một mẫu tín hiệu chỉ của riêng mình — không phải của ai trong nhóm.</strong> Khi có điểm neo đó, nhận thức cộng đồng của bạn trở thành lợi thế thay vì gánh nặng.',
+    cta:'Nếu tất cả nhóm của bạn đều ngoại tuyến trong 1 tuần, bạn vẫn có thể tìm được tín hiệu không?' },
+
+  ISTP:{ name:'Người Thợ Lành Nghề', style:'Giao dịch kỹ thuật ngắn hạn',
+    identity:'Bạn đọc biểu đồ như đọc ngôn ngữ mẹ đẻ. Mẫu nến, cấu trúc thị trường, vùng hỗ trợ kháng cự — bạn xử lý những thứ này theo phản xạ, không cần suy nghĩ. Khả năng thực thi lệnh của bạn sắc bén nhất.',
+    strengths:['Thực thi lệnh tốt nhất — vào và thoát chính xác, không do dự','Bình tĩnh dưới áp lực — thua lỗ ngắn hạn không làm bạn sụp đổ','Đọc diễn biến giá theo phản xạ — không cần chỉ báo cũng nhìn thấy tín hiệu','Giữ hệ thống đơn giản và hiệu quả, không phức tạp hóa'],
+    blind:'ISTP có điểm mù kinh điển: giỏi đọc từng cây nến nhưng không biết đang ở đâu trong bức tranh lớn hơn. Vào lệnh bán một tín hiệu rõ như sách — không biết mình đang bán trong xu hướng tăng mạnh trên tuần. Kết quả: những lệnh thắng nhỏ bị xóa sổ bởi một lần đi ngược xu hướng lớn.',
+    hook:'ISTP chỉ cần thêm một thứ vào thói quen: <strong>5 phút nhìn biểu đồ tuần và tháng trước khi mở biểu đồ ngắn hạn.</strong> Chỉ cần biết mình đang giao dịch cùng chiều hay ngược chiều xu hướng lớn hơn.',
+    cta:'Trước khi vào lệnh ngắn hạn, bạn có thường kiểm tra khung thời gian lớn hơn không?' },
+
+  ISFP:{ name:'Nghệ Sĩ Phiêu Lưu', style:'Giao dịch tùy nghi theo cảm nhận',
+    identity:'Bạn cảm nhận được khi nào thị trường "cảm thấy đúng" — và đó không phải mê tín. Đó là khả năng nhận dạng mẫu tích lũy từ hàng giờ nhìn màn hình, được não xử lý dưới dạng trực giác.',
+    strengths:['Cảm nhận thị trường tốt — nhận ra khi đà tăng đang thay đổi trước khi biểu đồ xác nhận','Linh hoạt — không bị cố định vào một quan điểm khi thực tế thay đổi','Ít bị thiên kiến xác nhận vì không gắn chặt vào một luận điểm','Tốt trong môi trường biến động cao khi hệ thống cứng nhắc không còn hoạt động'],
+    blind:'ISFP có điểm mù nguy hiểm nhất: không phân biệt được trực giác thật sự và xung động nhất thời. Cả hai đều "cảm thấy như đúng," đều đến nhanh và tự tin. Nhưng một cái được xây từ hàng nghìn giờ nhìn màn hình, cái kia được kích hoạt bởi FOMO hoặc sự buồn chán.',
+    hook:'Trực giác của bạn có thể là lợi thế thật — nhưng chỉ khi được đo lường. <strong>Nếu không theo dõi xem lệnh nào là trực giác và lệnh nào là xung động, bạn không có cơ sở để cải thiện.</strong>',
+    cta:'Bạn có phân biệt được khi nào mình đang giao dịch bằng trực giác và khi nào bằng xung động không?' },
+
+  ESTP:{ name:'Người Thúc Đẩy', style:'Giao dịch tần suất cao',
+    identity:'Bạn đọc đà thị trường nhanh hơn hầu hết người. Trong một cây nến 1 phút, bạn đã biết mình muốn làm gì trong khi người khác còn đang vẽ các mức giá. Áp lực làm bạn sắc bén hơn, không tê liệt.',
+    strengths:['Thực thi lệnh nhanh và quyết đoán — không mất thời gian phân vân','Đọc được sự thay đổi đà tăng sớm hơn phần lớn trader','Cắt lỗ được thực hiện nhanh — không có thói quen gồng lỗ','Khi tăng khối lượng đúng lúc, hiệu quả lệnh rất cao'],
+    blind:'Con số thật: tỉ lệ thắng cao nhưng hiệu quả tổng thể thấp — và một ngày tệ xóa sạch nhiều ngày tốt. Nguy hiểm nhất không phải giao dịch quá nhiều — mà là tăng khối lượng sau thua lỗ. Thua 1 lệnh, lệnh sau tăng 1.5 lần "để bù." Đây là cách não ESTP hoạt động — và vì đã từng gỡ được, thói quen ngày càng được củng cố.',
+    hook:'ESTP là nhóm có tiềm năng lợi nhuận ngắn hạn cao nhất — nhưng cũng có sự biến động cao nhất. Câu hỏi không phải "bạn có giao dịch tốt không" mà là <strong>"bạn có hệ thống nào ngăn bạn tự phá hủy vào những ngày xấu không?"</strong>',
+    cta:'Giới hạn thua lỗ trong ngày của bạn là bao nhiêu — và bạn có thực sự dừng khi chạm không?' },
+
+  ESFP:{ name:'Người Biểu Diễn', style:'Giao dịch phản ứng theo thị trường',
+    identity:'Bạn cảm nhận được năng lượng của thị trường theo nghĩa đen. Khi khối lượng tăng đột biến, khi biến động tăng vọt — bạn cảm thấy nó trước khi phân tích nó. Đây là thứ không thể dạy — nhưng cũng nguy hiểm nhất nếu không được kiểm soát.',
+    strengths:['Nhạy bén với biến động ngắn hạn — không bỏ lỡ các cú di chuyển nhanh','Không bị overthink — vào lệnh nhanh khi cơ hội xuất hiện','Không gắn cái tôi vào phân tích — dễ đổi hướng khi cần','Năng lượng cao duy trì được tập trung trong phiên dài'],
+    blind:'ESFP có điểm mù khó nhìn thấy: bạn không giao dịch thị trường — bạn đang phản ứng với thị trường. Và đó là hai thứ hoàn toàn khác nhau. Người phản ứng luôn đi sau một bước — mua vào chính xác lúc tiền thông minh đang bán. Điểm mù nguy hiểm hơn: rất dễ bị kéo theo cảm xúc của người xung quanh trong khi giao dịch.',
+    hook:'Thứ ESFP cần không phải thêm kiến thức kỹ thuật. Thứ cần là <strong>một điều kiện kích hoạt cứng để vào lệnh trước khi thị trường di chuyển — không phải sau khi.</strong> Sự chuyển đổi từ phản ứng sang chủ động là ranh giới giữa ESFP thua tiền và ESFP kiếm tiền.',
+    cta:'Bạn thường vào lệnh trước hay sau khi cú di chuyển đã bắt đầu?' }
+};
+
+const VALID = Object.keys(TYPES);
+
+// ── LOOKUP — redirect thẳng vào result.html ───────────────
+function lookupType(){
+  const raw = document.getElementById('lookup-input').value.trim().toUpperCase();
+  const errEl = document.getElementById('lookup-err');
+
+  if(!VALID.includes(raw)){
+    errEl.style.display = 'block';
+    return;
   }
+  errEl.style.display = 'none';
+
+  // Dựng resultData theo đúng format mà result.html đọc
+  const resultData = {
+    isTrader: true,          // luôn hiện full result
+    userData: {
+      name: 'bạn',           // không có tên khi tra cứu nhanh
+      age: '',
+      job: 'Tra cứu nhanh',
+      email: ''
+    },
+    mg: raw,                 // MBTI chung = type nhập vào
+    mt: raw,                 // MBTI trader = type nhập vào (nhất quán)
+    mc: raw,                 // type tổng hợp
+    scores: {                // scores giả — chỉ dùng để hiện bar 50/50
+      E:1,I:1,S:1,N:1,T:1,F:1,J:1,P:1
+    },
+    gamblerScore: null,      // null = ẩn phần Gambler khi tra cứu nhanh
+    isQuickLookup: true      // flag để result.html biết đây là tra cứu nhanh
+  };
+
+  sessionStorage.setItem('resultData', JSON.stringify(resultData));
+  window.location.href = 'result.html';
+}
 </script>
 </body>
 </html>
